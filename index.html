@@ -132,7 +132,6 @@
             color: #1e293b;
         }
 
-        /* REAL EXAM MODE: No Green/Red Colors. Cursor shows simple active indicator */
         .passage-box span.typed { color: #0f172a; font-weight: 500; }
         .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e2e8f0; }
 
@@ -266,4 +265,379 @@
 
     <div class="container">
 
-        <div class="
+        <div class="selection-card">
+            <div class="select-group">
+                <label for="postDropdown"><i class="fa-solid fa-briefcase"></i> Select Exam Category:</label>
+                <select id="postDropdown" class="custom-select" onchange="onPostChange()">
+                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / 1500 Keys Passage (Min 1000 Target)</option>
+                    <option value="dp_ministerial">Delhi Police HC (Ministerial) - 10 Mins / 30 WPM Target</option>
+                    <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins / 2000 Keys Target</option>
+                    <option value="rrb_ntpc">RRB NTPC Typing Test - 10 Mins / 30 WPM Target</option>
+                    <option value="high_court">High Court Junior Assistant - 10 Mins / 30 WPM Target</option>
+                </select>
+            </div>
+
+            <div class="select-group">
+                <label for="testDropdown"><i class="fa-solid fa-list-check"></i> Select Test Set (1 to 200):</label>
+                <select id="testDropdown" class="custom-select" onchange="onTestChange()"></select>
+            </div>
+        </div>
+
+        <div class="rules-banner" id="rulesBox"></div>
+
+        <div class="exam-top-bar">
+            <div class="stat-box">Time Left: <span id="timerDisplay">15:00</span></div>
+            <div class="stats-group">
+                <div class="stat-box">Keys Pressed: <span id="keyCount">0</span></div>
+                <div class="stat-box">Exam Mode: <span style="color:#38bdf8;">Real Exam (No Live Colors)</span></div>
+            </div>
+        </div>
+
+        <div class="book-container">
+            <div class="book-page-left">
+                <div class="page-header"><i class="fa-solid fa-file-lines"></i> Question Passage</div>
+                <div class="passage-box" id="passageBox"></div>
+            </div>
+
+            <div class="book-page-right">
+                <div>
+                    <div class="page-header"><i class="fa-solid fa-keyboard"></i> Candidate Typing Space</div>
+                    <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Test' button to begin typing here..." disabled></textarea>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Test</button>
+                    <button class="btn btn-reset" onclick="resetExam()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-header">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Attempt History & Scorecard Log</h3>
+                <button class="btn btn-danger" onclick="clearHistory()" style="padding: 0.4rem 0.8rem; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Clear Log</button>
+            </div>
+            <div class="table-responsive">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Exam Post</th>
+                            <th>Test Set</th>
+                            <th>Keys Pressed</th>
+                            <th>Errors</th>
+                            <th>Net WPM</th>
+                            <th>Accuracy</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Result Modal -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-modal">
+            <h2>Exam Evaluation Card</h2>
+            <div id="statusBadge" class="status-badge"></div>
+            
+            <p id="resultReason" style="font-size: 0.9rem; color: #475569;"></p>
+
+            <div class="eval-grid">
+                <div class="eval-item">
+                    <label>Total Key Depressions</label>
+                    <val id="resKeys">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Total Errors</label>
+                    <val id="resErrors">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Net Speed (WPM)</label>
+                    <val id="resWpm">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Accuracy</label>
+                    <val id="resAccuracy">0%</val>
+                </div>
+            </div>
+
+            <button class="btn btn-start" onclick="closeModal()" style="width:100%; justify-content:center;">Try Next / Retake</button>
+        </div>
+    </div>
+
+    <script>
+        const postConfigs = {
+            dp_awo_tpo: {
+                title: "Delhi Police HC (AWO/TPO)",
+                durationSec: 900, reqKeys: 1000, maxMistakes: 24, minWpm: 13.3,
+                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Passage: ~1500 Key Depressions | Requirement: Min 1000 Keys & Max 24 Mistakes."
+            },
+            dp_ministerial: {
+                title: "Delhi Police HC (Ministerial)",
+                durationSec: 600, reqKeys: 1500, maxMistakes: 50, minWpm: 30,
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Minimum Speed Target: 30 WPM."
+            },
+            ssc_dest: {
+                title: "SSC CGL / CHSL DEST",
+                durationSec: 900, reqKeys: 2000, maxMistakes: 100, minWpm: 27,
+                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Target: Minimum 2000 Key Depressions."
+            },
+            rrb_ntpc: {
+                title: "RRB NTPC Typing Test",
+                durationSec: 600, reqKeys: 1500, maxMistakes: 75, minWpm: 30,
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM English."
+            },
+            high_court: {
+                title: "High Court Junior Assistant",
+                durationSec: 600, reqKeys: 1500, maxMistakes: 60, minWpm: 30,
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM."
+            }
+        };
+
+        const topics = [
+            "Wireless communication in modern police forces requires high precision, speed, and standard protocol adherence for seamless dispatch operations across command centers.",
+            "Tele-printer operators process official instructions rapidly across secure district networks to maintain real-time field coordination during critical security situations.",
+            "Radio signal transmission protocols demand strict adherence to frequency guidelines during emergency broadcasts across law enforcement command units.",
+            "Assistant Wireless Operators manage technical signals, ensuring accurate logging of inter-state security communications and emergency frequency dispatches.",
+            "Digital encryption systems protect confidential police dispatches against unauthorized interception across regional command centers and field stations.",
+            "India is a sovereign secular democratic republic with a rich cultural heritage and diversity. The Constitution of India provides a robust democratic framework.",
+            "Artificial intelligence and machine learning are revolutionizing modern industries, automation, and data processing across global financial markets.",
+            "Sustainable development requires balancing economic growth with environmental preservation, renewable energy adoption, and carbon footprint reduction.",
+            "The Indian Railways network operates vast logistics systems, connecting towns and cities while transporting millions of passengers daily.",
+            "Space exploration and satellite technology enable global communication, weather forecasting, navigation systems, and deep space research missions."
+        ];
+
+        const allTestsData = {};
+        Object.keys(postConfigs).forEach(postKey => {
+            allTestsData[postKey] = {};
+            for (let i = 1; i <= 200; i++) {
+                let t1 = topics[(i - 1) % topics.length];
+                let t2 = topics[(i * 3) % topics.length];
+                
+                if (postKey === "dp_awo_tpo") {
+                    allTestsData[postKey][`test_${i}`] = `${t1} Test number ${i} for Assistant Wireless Operator evaluating typing efficiency under realistic trade test conditions. ${t2} Maintaining clean fingers movement on standard keyboards ensures error-free text transcription. Practice daily to build memory and accuracy. ${t1}`;
+                } else {
+                    allTestsData[postKey][`test_${i}`] = `${t1}\n\nTest Set ${i} Passage Block: ${t2} Maintaining high typing speed along with flawless character accuracy is the key factor to qualify competitive typing examinations. Always keep a steady rhythm and avoid rushing over complex words.\n\n${t1}`;
+                }
+            }
+        });
+
+        function getHistory() {
+            return JSON.parse(localStorage.getItem("typing_history") || "[]");
+        }
+
+        function saveHistory(record) {
+            let history = getHistory();
+            history.unshift(record);
+            localStorage.setItem("typing_history", JSON.stringify(history));
+        }
+
+        function clearHistory() {
+            if(confirm("Kya aap apni saari attempt history delete karna chahte hain?")) {
+                localStorage.removeItem("typing_history");
+                renderHistoryTable();
+                populateTestDropdown();
+            }
+        }
+
+        const postDropdown = document.getElementById("postDropdown");
+        const testDropdown = document.getElementById("testDropdown");
+        const rulesBox = document.getElementById("rulesBox");
+        const passageBox = document.getElementById("passageBox");
+        const typingInput = document.getElementById("typingInput");
+        const timerDisplay = document.getElementById("timerDisplay");
+        const keyCountDisplay = document.getElementById("keyCount");
+        const startBtn = document.getElementById("startBtn");
+
+        let currentPost = "dp_awo_tpo";
+        let currentPassage = "";
+        let totalTimeSeconds = 900;
+        let timerInterval = null;
+        let isExamActive = false;
+
+        function populateTestDropdown() {
+            let history = getHistory();
+            testDropdown.innerHTML = "";
+
+            for (let i = 1; i <= 200; i++) {
+                let testKey = `test_${i}`;
+                let attempts = history.filter(h => h.postKey === currentPost && h.testKey === testKey);
+                
+                let badgeText = "";
+                if(attempts.length > 0) {
+                    let bestKeys = Math.max(...attempts.map(a => a.keys));
+                    let hasPassed = attempts.some(a => a.status === "PASS");
+                    badgeText = ` ✔ (${attempts.length}x | Best Keys: ${bestKeys} - ${hasPassed ? 'PASS' : 'FAIL'})`;
+                } else {
+                    badgeText = " (Not Attempted)";
+                }
+
+                let opt = document.createElement("option");
+                opt.value = testKey;
+                opt.innerText = `Test Set ${i}${badgeText}`;
+                testDropdown.appendChild(opt);
+            }
+        }
+
+        function renderHistoryTable() {
+            let history = getHistory();
+            let tbody = document.getElementById("historyTableBody");
+            
+            if(history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = history.map(row => `
+                <tr>
+                    <td>${row.date}</td>
+                    <td><strong>${row.postTitle}</strong></td>
+                    <td>${row.testKey.replace('_', ' ').toUpperCase()}</td>
+                    <td><strong>${row.keys}</strong></td>
+                    <td style="color:${row.errors > 24 ? 'var(--danger)' : 'inherit'}">${row.errors}</td>
+                    <td>${row.wpm}</td>
+                    <td>${row.accuracy}%</td>
+                    <td><span class="${row.status === 'PASS' ? 'badge-pass' : 'badge-fail'}">${row.status}</span></td>
+                </tr>
+            `).join("");
+        }
+
+        function onPostChange() {
+            currentPost = postDropdown.value;
+            rulesBox.innerHTML = postConfigs[currentPost].rulesText;
+            populateTestDropdown();
+            resetExam();
+        }
+
+        function onTestChange() {
+            resetExam();
+        }
+
+        function loadPassage() {
+            let selectedTestKey = testDropdown.value;
+            currentPassage = allTestsData[currentPost][selectedTestKey];
+            passageBox.innerHTML = "";
+            currentPassage.split("").forEach((char, index) => {
+                const charSpan = document.createElement("span");
+                charSpan.innerText = char;
+                if(index === 0) charSpan.classList.add("current");
+                passageBox.appendChild(charSpan);
+            });
+
+            let totalSec = postConfigs[currentPost].durationSec;
+            let m = Math.floor(totalSec / 60);
+            let s = totalSec % 60;
+            timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+        }
+
+        onPostChange();
+        renderHistoryTable();
+
+        function startExam() {
+            if(isExamActive) return;
+
+            isExamActive = true;
+            typingInput.disabled = false;
+            typingInput.value = "";
+            typingInput.focus();
+            
+            startBtn.disabled = true;
+            startBtn.style.opacity = "0.6";
+
+            totalTimeSeconds = postConfigs[currentPost].durationSec;
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if(totalTimeSeconds > 0) {
+                    totalTimeSeconds--;
+                    updateTimerDisplay();
+                    evaluateLive();
+                } else {
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            let m = Math.floor(totalTimeSeconds / 60);
+            let s = totalTimeSeconds % 60;
+            timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+        }
+
+        typingInput.addEventListener("input", () => {
+            if(!isExamActive) return;
+            evaluateLive();
+            
+            const currentSpan = passageBox.querySelector("span.current");
+            if(currentSpan) {
+                currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if(typingInput.value.length >= currentPassage.length) {
+                finishExam();
+            }
+        });
+
+        function evaluateLive() {
+            const typedVal = typingInput.value;
+            const spans = passageBox.querySelectorAll("span");
+            
+            let keyDepressions = typedVal.length;
+
+            spans.forEach((span, i) => {
+                span.className = "";
+                if (i < typedVal.length) {
+                    span.classList.add("typed");
+                } else if (i === typedVal.length) {
+                    span.classList.add("current");
+                }
+            });
+
+            keyCountDisplay.innerText = keyDepressions;
+            return keyDepressions;
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            isExamActive = false;
+            typingInput.disabled = true;
+
+            const typedVal = typingInput.value;
+            const spans = passageBox.querySelectorAll("span");
+            
+            let keyDepressions = typedVal.length;
+            let errors = 0;
+
+            spans.forEach((span, i) => {
+                const typedChar = typedVal[i];
+                if (typedChar != null && typedChar !== span.innerText) {
+                    errors++;
+                }
+            });
+
+            let timeElapsed = postConfigs[currentPost].durationSec - totalTimeSeconds;
+            let words = keyDepressions / 5;
+            let wpm = timeElapsed > 0 ? Math.round((words / timeElapsed) * 60) : 0;
+
+            const config = postConfigs[currentPost];
+
+            let passed = false;
+            let failReason = "";
+
+            if(currentPost === "dp_awo_tpo") {
+                if(keyDepressions < 1000 && errors >= 25) {
+                    failReason = `Failed: Key depressions (${keyDepressions}) were under 1000 AND errors (${errors}) exceeded 24.`;
+                } else if(keyDepressions < 1000) {
+                    failReason = `Failed: Key depressions were ${keyDepressions} (Minimum 1000 required).`;
+                } else if(errors >= 25) {
+                    failReason = `Failed: Total errors were ${errors} (Maximum 24 allowed).`;
+                } else {
+                    passed = true;
+                }
+            } else
