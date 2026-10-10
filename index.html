@@ -3,142 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestMentor - Realistic Government Exam Typing Simulator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>TestMentor - Professional Government Exam Typing Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #1e3a8a;
-            --primary-light: #2563eb;
-            --success: #16a34a;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #e0e7ff;
+            --success: #059669;
             --danger: #dc2626;
-            --bg: #e2e8f0;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text: #0f172a;
+            --text: #1e293b;
             --text-muted: #64748b;
-            --border: #cbd5e1;
-            --book-bg: #fdfbf7;
+            --border: #e2e8f0;
+            --book-bg: #fcfcfc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
 
-        header { background: #ffffff; border-bottom: 2px solid #cbd5e1; position: sticky; top: 0; z-index: 1000; }
-        .navbar { max-width: 1300px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .badge-exam { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        header { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .navbar { max-width: 1350px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo i { background: var(--primary-light); color: var(--primary); padding: 8px; border-radius: 8px; }
+        .badge-exam { background: #fef3c7; color: #b45309; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .container { max-width: 1300px; margin: 1.5rem auto; padding: 0 1rem; }
+        .container { max-width: 1350px; margin: 2rem auto; padding: 0 1.5rem; }
 
         .selection-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.2rem;
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
         }
 
-        .select-group { display: flex; flex-direction: column; gap: 5px; }
-        .select-group label { font-weight: 700; font-size: 0.88rem; color: var(--primary); }
+        .select-group { display: flex; flex-direction: column; gap: 6px; }
+        .select-group label { font-weight: 700; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
         select.custom-select {
-            padding: 0.55rem 1rem;
+            padding: 0.75rem 1rem;
             border: 2px solid var(--border);
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 0.95rem;
             font-weight: 600;
             outline: none;
             cursor: pointer;
-            background: white;
+            background: #f8fafc;
+            color: var(--text);
+            transition: all 0.2s;
         }
-        select.custom-select:focus { border-color: var(--primary-light); }
+        select.custom-select:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
 
         .rules-banner {
-            background: #eff6ff;
-            border-left: 4px solid var(--primary-light);
-            padding: 0.8rem 1.2rem;
-            border-radius: 6px;
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
-            color: #1e40af;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%);
+            border-left: 5px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            font-size: 0.92rem;
+            color: #312e81;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .exam-interface {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
 
         .exam-top-bar {
             background: #0f172a;
             color: white;
-            padding: 0.9rem 1.5rem;
-            border-radius: 10px 10px 0 0;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
 
-        .stats-group { display: flex; gap: 1.8rem; font-size: 0.95rem; }
-        .stat-box span { color: #38bdf8; font-weight: bold; }
+        .stat-box { font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .stat-box span { color: #38bdf8; font-weight: 700; font-size: 1.1rem; }
 
         .book-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-top: none;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-            overflow: hidden;
-            min-height: 480px;
+            min-height: 450px;
         }
 
         .book-page-left {
             background: var(--book-bg);
-            border-right: 2px dashed var(--border);
-            padding: 1.5rem;
+            border-right: 1px solid var(--border);
+            padding: 2rem;
             display: flex;
             flex-direction: column;
         }
 
         .page-header {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid #e5e7eb;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .passage-box {
-            height: 380px;
+            height: 340px;
             overflow-y: auto;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.05rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.02rem;
             line-height: 1.9;
             user-select: none;
             white-space: pre-wrap;
             word-break: break-all;
-            padding-right: 8px;
-            color: #1e293b;
+            padding-right: 10px;
+            color: #334155;
         }
 
-        /* REAL EXAM MODE: NO LIVE RED / GREEN COLORS */
-        .passage-box span.typed { color: #0f172a; font-weight: 500; }
-        .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e2e8f0; }
+        /* REAL EXAM MODE: NO LIVE RED / GREEN HIGHLIGHTS */
+        .passage-box span.typed { color: #0f172a; font-weight: 600; }
+        .passage-box span.current { border-bottom: 3px solid var(--primary); background-color: var(--primary-light); }
 
         .book-page-right {
             background: #ffffff;
-            padding: 1.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -146,30 +154,31 @@
 
         textarea.typing-textarea {
             width: 100%;
-            height: 380px;
-            padding: 1rem;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.05rem;
+            height: 340px;
+            padding: 1.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.02rem;
             line-height: 1.9;
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             outline: none;
             resize: none;
             background: #fafafa;
             color: #0f172a;
+            transition: all 0.2s;
         }
         textarea.typing-textarea:focus {
-            border-color: var(--primary-light);
+            border-color: var(--primary);
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
 
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
 
         .btn {
-            padding: 0.65rem 1.6rem;
+            padding: 0.75rem 1.8rem;
             font-weight: 700;
-            border-radius: 6px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             font-size: 0.95rem;
@@ -177,37 +186,40 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .btn-start { background: var(--primary-light); color: white; }
-        .btn-start:hover { background: var(--primary); }
+        .btn-start { background: var(--primary); color: white; }
+        .btn-start:hover { background: var(--primary-dark); transform: translateY(-1px); }
         .btn-reset { background: #64748b; color: white; }
+        .btn-reset:hover { background: #475569; }
         .btn-danger { background: var(--danger); color: white; }
 
         .history-section {
-            margin-top: 2.5rem;
+            margin-top: 3rem;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
 
-        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
         .table-responsive { overflow-x: auto; }
 
         table.history-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
-        table.history-table th, table.history-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
-        table.history-table th { background: #f8fafc; font-weight: 700; color: var(--primary); }
+        table.history-table th, table.history-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); }
+        table.history-table th { background: #f8fafc; font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
 
-        .badge-pass { background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
-        .badge-fail { background: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+        .badge-pass { background: #d1fae5; color: #065f46; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+        .badge-fail { background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
 
         .result-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(5px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -215,26 +227,33 @@
 
         .result-modal {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 480px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalPop 0.3s ease-out;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .status-badge {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
-            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            font-size: 1.1rem;
             font-weight: 800;
             border-radius: 30px;
             margin: 1rem 0;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .status-pass { background: #dcfce7; color: #15803d; border: 2px solid #16a34a; }
-        .status-fail { background: #fee2e2; color: #b91c1c; border: 2px solid #dc2626; }
+        .status-pass { background: #d1fae5; color: #065f46; border: 2px solid #34d399; }
+        .status-fail { background: #fee2e2; color: #991b1b; border: 2px solid #f87171; }
 
         .eval-grid {
             display: grid;
@@ -243,16 +262,16 @@
             margin: 1.5rem 0;
             text-align: left;
             background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.2rem;
+            border-radius: 12px;
         }
 
-        .eval-item label { font-size: 0.8rem; color: var(--text-muted); display: block; }
-        .eval-item val { font-weight: 700; font-size: 1.1rem; }
+        .eval-item label { font-size: 0.78rem; color: var(--text-muted); display: block; font-weight: 600; text-transform: uppercase; }
+        .eval-item val { font-weight: 800; font-size: 1.2rem; color: var(--text); }
 
         @media (max-width: 900px) {
             .book-container { grid-template-columns: 1fr; }
-            .book-page-left { border-right: none; border-bottom: 2px dashed var(--border); }
+            .book-page-left { border-right: none; border-bottom: 1px solid var(--border); }
         }
     </style>
 </head>
@@ -260,7 +279,7 @@
 
     <header>
         <div class="navbar">
-            <a href="#" class="logo"><i class="fa-solid fa-book-open"></i> TestMentor <span class="badge-exam">Real Exam Engine</span></a>
+            <a href="#" class="logo"><i class="fa-solid fa-graduation-cap"></i> TestMentor <span class="badge-exam">Official Exam Edition</span></a>
         </div>
     </header>
 
@@ -286,29 +305,29 @@
 
         <div class="rules-banner" id="rulesBox"></div>
 
-        <div class="exam-top-bar">
-            <div class="stat-box">Time Left: <span id="timerDisplay">15:00</span></div>
-            <div class="stats-group">
-                <div class="stat-box">Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box">Exam Mode: <span style="color:#38bdf8;">Real Exam (No Live Colors)</span></div>
-            </div>
-        </div>
-
-        <div class="book-container">
-            <div class="book-page-left">
-                <div class="page-header"><i class="fa-solid fa-file-lines"></i> Question Passage</div>
-                <div class="passage-box" id="passageBox"></div>
+        <div class="exam-interface">
+            <div class="exam-top-bar">
+                <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
+                <div class="stat-box"><i class="fa-solid fa-keyboard"></i> Keys Pressed: <span id="keyCount">0</span></div>
+                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (No Live Colors)</span></div>
             </div>
 
-            <div class="book-page-right">
-                <div>
-                    <div class="page-header"><i class="fa-solid fa-keyboard"></i> Candidate Typing Space</div>
-                    <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Test' button to begin typing here..." disabled></textarea>
+            <div class="book-container">
+                <div class="book-page-left">
+                    <div class="page-header"><i class="fa-solid fa-book-open-reader"></i> Original Question Passage</div>
+                    <div class="passage-box" id="passageBox"></div>
                 </div>
-                
-                <div class="controls">
-                    <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Test</button>
-                    <button class="btn btn-reset" onclick="resetExam()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+
+                <div class="book-page-right">
+                    <div>
+                        <div class="page-header"><i class="fa-solid fa-pen-to-square"></i> Candidate Typing Workspace</div>
+                        <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Test' button to begin typing here..." disabled></textarea>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Test</button>
+                        <button class="btn btn-reset" onclick="resetExam()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -316,7 +335,7 @@
         <div class="history-section">
             <div class="history-header">
                 <h3><i class="fa-solid fa-clock-rotate-left"></i> Attempt History & Scorecard Log</h3>
-                <button class="btn btn-danger" onclick="clearHistory()" style="padding: 0.4rem 0.8rem; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Clear Log</button>
+                <button class="btn btn-danger" onclick="clearHistory()" style="padding: 0.5rem 1rem; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Clear Log</button>
             </div>
             <div class="table-responsive">
                 <table class="history-table">
@@ -333,7 +352,7 @@
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>
+                        <tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 2rem;">No attempts recorded yet. Take a test above!</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -341,13 +360,13 @@
 
     </div>
 
-    <!-- Final Result Sheet Modal -->
+    <!-- Final Evaluation Result Modal -->
     <div class="result-overlay" id="resultOverlay">
         <div class="result-modal">
-            <h2>Exam Evaluation Card</h2>
+            <h2 style="color: #0f172a; font-weight: 800;">Exam Evaluation Card</h2>
             <div id="statusBadge" class="status-badge"></div>
             
-            <p id="resultReason" style="font-size: 0.9rem; color: #475569;"></p>
+            <p id="resultReason" style="font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem;"></p>
 
             <div class="eval-grid">
                 <div class="eval-item">
@@ -382,22 +401,22 @@
             dp_ministerial: {
                 title: "Delhi Police HC (Ministerial)",
                 durationSec: 600, reqKeys: 1500, maxMistakes: 50, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Minimum Speed Target: 30 WPM."
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Minimum Speed Target: 30 WPM | Max Mistakes: 50."
             },
             ssc_dest: {
                 title: "SSC CGL / CHSL DEST",
                 durationSec: 900, reqKeys: 2000, maxMistakes: 100, minWpm: 27,
-                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Target: Minimum 2000 Key Depressions."
+                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Target: Minimum 2000 Key Depressions | Max Mistakes: 100."
             },
             rrb_ntpc: {
                 title: "RRB NTPC Typing Test",
                 durationSec: 600, reqKeys: 1500, maxMistakes: 75, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM English."
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM English | Max Mistakes: 75."
             },
             high_court: {
                 title: "High Court Junior Assistant",
                 durationSec: 600, reqKeys: 1500, maxMistakes: 60, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM."
+                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM | Max Mistakes: 60."
             }
         };
 
@@ -435,30 +454,27 @@
             "E-governance initiatives streamline public service delivery, digital identity verification, and transparent grievance redressal portals for citizens."
         ];
 
-        // Advanced Generator ensuring 200 100% Unique Passages with Zero Repetition
+        // 100% Unique Procedural Generator for 200 tests per post with zero repetition
         const allTestsData = {};
         Object.keys(postConfigs).forEach(postKey => {
             allTestsData[postKey] = {};
             for (let i = 1; i <= 200; i++) {
                 let uniqueSentences = [];
-                let pickCount = (postKey === "dp_awo_tpo") ? 7 : 10;
+                let pickCount = (postKey === "dp_awo_tpo") ? 7 : 11;
                 
                 for (let j = 0; j < pickCount; j++) {
-                    // Unique hashing formula using test index 'i' and loop counter 'j'
-                    let idx = (i * 31 + j * 17 + postKey.charCodeAt(0)) % masterSentencePool.length;
+                    let idx = (i * 37 + j * 19 + postKey.charCodeAt(0)) % masterSentencePool.length;
                     let sentence = masterSentencePool[idx];
-                    // Avoid direct adjacent duplicate if any
                     if (!uniqueSentences.includes(sentence)) {
                         uniqueSentences.push(sentence);
                     } else {
-                        uniqueSentences.push(masterSentencePool[(idx + 3) % masterSentencePool.length]);
+                        uniqueSentences.push(masterSentencePool[(idx + 5) % masterSentencePool.length]);
                     }
                 }
                 
-                let combinedText = uniqueSentences.join(" ") + ` Assessment test set number ${i} specifically compiled for ${postConfigs[postKey].title} examination practice.`;
+                let combinedText = uniqueSentences.join(" ") + ` Assessment test set number ${i} specifically compiled for ${postConfigs[postKey].title} professional examination practice.`;
 
                 if (postKey === "dp_awo_tpo") {
-                    // Strict 1500 characters lock for AWO/TPO
                     if (combinedText.length > 1500) {
                         combinedText = combinedText.substring(0, 1500);
                     } else {
@@ -535,7 +551,7 @@
             let tbody = document.getElementById("historyTableBody");
             
             if(history.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 2rem;">No attempts recorded yet. Take a test above!</td></tr>`;
                 return;
             }
 
@@ -568,7 +584,7 @@
             let selectedTestKey = testDropdown.value;
             currentPassage = allTestsData[currentPost][selectedTestKey];
             passageBox.innerHTML = "";
-            passageBox.scrollTop = 0; // Reset scroll to top
+            passageBox.scrollTop = 0;
             currentPassage.split("").forEach((char, index) => {
                 const charSpan = document.createElement("span");
                 charSpan.innerText = char;
@@ -625,7 +641,7 @@
             }
         });
 
-        // Live Engine: Strictly NO AUTO-SCROLL DOWNWARD & NO LIVE COLORS
+        // Live Engine: NO LIVE COLORS & NO AUTO-SCROLL DOWNWARD
         function evaluateLive() {
             const typedVal = typingInput.value;
             const spans = passageBox.querySelectorAll("span");
