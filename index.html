@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestMentor - Free Online Typing Test & Government Exam Practice</title>
-    <!-- Google Fonts & FontAwesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>TestMentor - Delhi Police HC AWO/TPO Real Typing Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --accent: #f59e0b;
-            --bg-color: #f8fafc;
-            --text-main: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
             --text-muted: #64748b;
-            --white: #ffffff;
-            --card-border: #e2e8f0;
+            --border: #cbd5e1;
         }
 
         * {
@@ -28,15 +28,15 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
         }
 
-        /* Header & Navbar */
+        /* Top Header */
         header {
-            background: var(--white);
-            border-bottom: 1px solid var(--card-border);
+            background: #ffffff;
+            border-bottom: 2px solid #e2e8f0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -45,14 +45,14 @@
         .navbar {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--primary);
             text-decoration: none;
@@ -61,13 +61,19 @@
             gap: 8px;
         }
 
-        .logo span {
-            color: var(--text-main);
+        .badge-exam {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
             align-items: center;
         }
@@ -75,484 +81,457 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .btn {
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            text-decoration: none;
             font-weight: 600;
-            transition: background 0.3s;
-            border: none;
-            cursor: pointer;
+            font-size: 0.95rem;
         }
 
-        .btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        /* Hero Section */
+        /* Hero Banner */
         .hero {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2.5rem 1rem;
             text-align: center;
-        }
-
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 2.75rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 1rem;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 3rem;
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-
-        .stat-item h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .stat-item p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* Main Content Grid */
-        .container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .section-title h2 {
             font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .section-title p {
-            color: var(--text-muted);
-        }
-
-        /* Live Typing Test Widget Box */
-        .typing-card {
-            background: var(--white);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-            margin-bottom: 4rem;
-        }
-
-        .typing-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 1rem;
-        }
-
-        .timer-score {
-            display: flex;
-            gap: 2rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .sample-text {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            background: var(--bg-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            user-select: none;
-        }
-
-        .sample-text span.correct {
-            color: #16a34a;
-            font-weight: 600;
-        }
-
-        .sample-text span.incorrect {
-            color: #dc2626;
-            background: #fee2e2;
-        }
-
-        .typing-input {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
-            border: 2px solid var(--card-border);
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 1.5rem;
-        }
-
-        .typing-input:focus {
-            border-color: var(--primary);
-        }
-
-        .typing-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Exam Categories Grid */
-        .exams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-
-        .exam-card {
-            background: var(--white);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .exam-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-        }
-
-        .exam-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .exam-card h3 {
-            font-size: 1.25rem;
             margin-bottom: 0.5rem;
         }
 
-        .exam-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+        .hero p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Rules Box */
+        .rules-card {
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary-light);
+            padding: 1.2rem;
+            border-radius: 6px;
             margin-bottom: 1.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 3rem 2rem 1.5rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-logo {
-            color: var(--white);
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .footer-bottom {
-            text-align: center;
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2rem; }
-            .stats-bar { flex-direction: column; gap: 1rem; }
-            .footer-content { flex-direction: column; gap: 1rem; text-align: center; }
+        .rules-card ul {
+            margin-left: 1.2rem;
+            margin-top: 0.5rem;
         }
+
+        /* Exam Simulator Interface */
+        .exam-interface {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .exam-top-bar {
+            background: #0f172a;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .stats-group {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .stat-box span {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* Display Passage */
+        .passage-box {
+            padding: 1.2rem;
+            background: #f1f5f9;
+            border-bottom: 2px solid var(--border);
+            height: 180px;
+            overflow-y: auto;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            user-select: none;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .passage-box span.correct {
+            color: #15803d;
+            background-color: #dcfce7;
+        }
+
+        .passage-box span.incorrect {
+            color: #b91c1c;
+            background-color: #fecaca;
+        }
+
+        .passage-box span.current {
+            border-bottom: 3px solid var(--primary-light);
+            background-color: #e0e7ff;
+        }
+
+        /* Typing Input */
+        .input-box-container {
+            padding: 1.2rem;
+        }
+
+        textarea.typing-textarea {
+            width: 100%;
+            height: 160px;
+            padding: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.1rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+            resize: none;
+        }
+
+        textarea.typing-textarea:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            font-weight: 700;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-start { background: var(--primary-light); color: white; }
+        .btn-start:hover { background: var(--primary); }
+        .btn-reset { background: #64748b; color: white; }
+
+        /* Modal Evaluation Card */
+        .result-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 30px;
+            margin: 1rem 0;
+            text-transform: uppercase;
+        }
+
+        .status-pass { background: #dcfce7; color: #15803d; border: 2px solid #16a34a; }
+        .status-fail { background: #fee2e2; color: #b91c1c; border: 2px solid #dc2626; }
+
+        .eval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            text-align: left;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .eval-item label { font-size: 0.8rem; color: var(--text-muted); display: block; }
+        .eval-item val { font-weight: 700; font-size: 1.1rem; }
+
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <nav class="navbar">
-            <a href="#" class="logo"><i class="fa-solid fa-graduation-cap"></i> Test<span>Mentor</span></a>
+        <div class="navbar">
+            <a href="#" class="logo"><i class="fa-solid fa-building-shield"></i> TestMentor <span class="badge-exam">DP AWO/TPO</span></a>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#typing-section">Typing Tests</a></li>
-                <li><a href="#exams">Exam Courses</a></li>
-                <li><a href="#">Pass Pricing</a></li>
+                <li><a href="#">Official Pattern</a></li>
+                <li><a href="#">Typing Guidelines</a></li>
             </ul>
-            <a href="#typing-section" class="btn">Get Started Free</a>
-        </nav>
+        </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-container">
-            <h1>Trusted Typing Exam Practice for <span>Serious Aspirants</span></h1>
-            <p>Practice exam-focused English & Hindi typing tests with accurate WPM, error calculation, and detailed mistake analysis.</p>
-            <a href="#typing-section" class="btn"><i class="fa-solid fa-keyboard"></i> Start Free Demo Test</a>
-
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <h3>30,00,000+</h3>
-                    <p>Typing Tests Taken</p>
-                </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p>Exam Courses</p>
-                </div>
-                <div class="stat-item">
-                    <h3>75,000+</h3>
-                    <p>Active Aspirants</p>
-                </div>
-            </div>
-        </div>
+        <h1>Delhi Police Head Constable (AWO/TPO)</h1>
+        <p>Real Exam Trade Test Simulator — 1000 Key Depressions in 15 Minutes</p>
     </section>
 
-    <!-- Main Container -->
-    <div class="container" id="typing-section">
-        
-        <!-- Interactive Typing Test Section -->
-        <div class="section-title">
-            <h2>Live Typing Practice Demo</h2>
-            <p>Type the text below to test your speed and accuracy instantly</p>
+    <div class="container">
+
+        <div class="rules-card">
+            <strong><i class="fa-solid fa-circle-info"></i> Delhi Police Official Passing Criteria (AWO/TPO):</strong>
+            <ul>
+                <li><strong>Time Limit:</strong> 15 Minutes (900 Seconds).</li>
+                <li><strong>Target:</strong> Minimum 1000 Key Depressions (~200 Words / 13.3 WPM Net Speed).</li>
+                <li><strong>Mistake Ceiling:</strong> Less than 25 Mistakes. <strong>25 or more mistakes = DISQUALIFIED (FAIL)</strong>.</li>
+                <li><strong>BackSpace:</strong> Allowed during typing.</li>
+            </ul>
         </div>
 
-        <div class="typing-card">
-            <div class="typing-header">
-                <h3><i class="fa-solid fa-stopwatch"></i> Speed Test</h3>
-                <div class="timer-score">
-                    <div>Time: <span id="timer">60</span>s</div>
-                    <div>WPM: <span id="wpm">0</span></div>
-                    <div>Accuracy: <span id="accuracy">100</span>%</div>
+        <!-- Real Exam Interface -->
+        <div class="exam-interface">
+            <div class="exam-top-bar">
+                <div class="stat-box">Time Left: <span id="timerDisplay">15:00</span></div>
+                <div class="stats-group">
+                    <div class="stat-box">Keys Pressed: <span id="keyCount">0</span>/1000</div>
+                    <div class="stat-box">Mistakes: <span id="errorCount">0</span></div>
+                    <div class="stat-box">WPM: <span id="wpmCount">0</span></div>
                 </div>
             </div>
 
-            <div class="sample-text" id="sampleText">
-                practice everyday with exam style passages to improve your typing speed and accuracy for government jobs.
-            </div>
+            <!-- Reference Text Display Box -->
+            <div class="passage-box" id="passageBox"></div>
 
-            <textarea class="typing-input" id="typingInput" placeholder="Click here and start typing the above text..." rows="3" disabled></textarea>
-
-            <div class="typing-controls">
-                <button class="btn" id="startBtn" onclick="startTest()">Start Test</button>
-                <button class="btn btn-outline" id="resetBtn" onclick="resetTest()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
-            </div>
-        </div>
-
-        <!-- Exam Categories -->
-        <div class="section-title" id="exams">
-            <h2>Target Government Exams</h2>
-            <p>Prepare specifically according to official exam patterns and rules</p>
-        </div>
-
-        <div class="exams-grid">
-            <div class="exam-card">
-                <i class="fa-solid fa-building-columns"></i>
-                <h3>SSC CGL & CHSL</h3>
-                <p>Practice standard Data Entry Speed Test (DEST) paragraphs with strict time bounds.</p>
-                <a href="#typing-section" class="btn btn-outline">Practice Now</a>
-            </div>
-            <div class="exam-card">
-                <i class="fa-solid fa-scale-balanced"></i>
-                <h3>High Court & Courts</h3>
-                <p>Preparation modules for Allahabad, Supreme Court, and various High Court Junior Assistants.</p>
-                <a href="#typing-section" class="btn btn-outline">Practice Now</a>
-            </div>
-            <div class="exam-card">
-                <i class="fa-solid fa-train"></i>
-                <h3>RRB NTPC & Railway</h3>
-                <p>Bilingual typing test modules designed precisely for Railway recruitment examinations.</p>
-                <a href="#typing-section" class="btn btn-outline">Practice Now</a>
-            </div>
-            <div class="exam-card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>UPSSSC & State Exams</h3>
-                <p>Specialized layouts and content for Hindi and English state-level clerical tests.</p>
-                <a href="#typing-section" class="btn btn-outline">Practice Now</a>
+            <!-- User Text Area Input -->
+            <div class="input-box-container">
+                <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Exam' button to begin the official test..." disabled></textarea>
+                
+                <div class="controls">
+                    <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Exam</button>
+                    <button class="btn btn-reset" onclick="resetExam()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">TestMentor</div>
-            <p>Trusted preparation platform for serious government job aspirants.</p>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 TestMentor Clone. Built for GitHub Pages.</p>
-        </div>
-    </footer>
+    <!-- Result & Evaluation Modal Box -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-modal">
+            <h2>Exam Evaluation Result</h2>
+            <div id="statusBadge" class="status-badge"></div>
+            
+            <p id="resultReason" style="font-size: 0.9rem; color: #475569;"></p>
 
-    <!-- JavaScript for Live Typing Logic -->
+            <div class="eval-grid">
+                <div class="eval-item">
+                    <label>Total Key Depressions</label>
+                    <val id="resKeys">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Total Mistakes</label>
+                    <val id="resErrors">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Gross Speed (WPM)</label>
+                    <val id="resWpm">0</val>
+                </div>
+                <div class="eval-item">
+                    <label>Accuracy</label>
+                    <val id="resAccuracy">0%</val>
+                </div>
+            </div>
+
+            <button class="btn btn-start" onclick="closeModal()" style="width:100%; justify-content:center;">Try Again</button>
+        </div>
+    </div>
+
     <script>
-        const originalText = document.getElementById("sampleText").innerText.trim();
+        // Official Standard DP AWO/TPO Exam Paragraph Passage (1000+ Key Depressions)
+        const officialPassage = "The Staff Selection Commission conducts the open competitive examination for recruitment to the post of Head Constable Assistant Wireless Operator and Tele-Printer Operator in Delhi Police. The trade test for English word processing is qualifying in nature. Candidates must achieve minimum one thousand key depressions within fifteen minutes duration. Maintaining speed along with high accuracy is crucial because twenty five or more mistakes will result in direct disqualification. Regular daily practice on computer keyboard helps aspirants build rhythm and confidence required for clearing the examination easily.";
+
+        const passageBox = document.getElementById("passageBox");
         const typingInput = document.getElementById("typingInput");
-        const timerDisplay = document.getElementById("timer");
-        const wpmDisplay = document.getElementById("wpm");
-        const accuracyDisplay = document.getElementById("accuracy");
+        const timerDisplay = document.getElementById("timerDisplay");
+        const keyCountDisplay = document.getElementById("keyCount");
+        const errorCountDisplay = document.getElementById("errorCount");
+        const wpmCountDisplay = document.getElementById("wpmCount");
         const startBtn = document.getElementById("startBtn");
 
-        let timeLeft = 60;
+        let totalTimeSeconds = 900; // 15 Minutes = 900 Sec
         let timerInterval = null;
-        let isStarted = false;
+        let isExamActive = false;
 
-        // Format sample text into individual spans for character highlighting
-        function loadSampleText() {
-            const sampleContainer = document.getElementById("sampleText");
-            sampleContainer.innerHTML = originalText.split("").map(char => `<span>${char}</span>`).join("");
+        // Render Paragraph
+        function renderPassage() {
+            passageBox.innerHTML = "";
+            officialPassage.split("").forEach((char, index) => {
+                const charSpan = document.createElement("span");
+                charSpan.innerText = char;
+                if(index === 0) charSpan.classList.add("current");
+                passageBox.appendChild(charSpan);
+            });
         }
-        loadSampleText();
+        renderPassage();
 
-        function startTest() {
+        function startExam() {
+            if(isExamActive) return;
+
+            isExamActive = true;
             typingInput.disabled = false;
             typingInput.value = "";
             typingInput.focus();
-            startBtn.innerText = "Running...";
+            
             startBtn.disabled = true;
-            
-            timeLeft = 60;
-            isStarted = true;
-            
-            const charSpans = document.querySelectorAll("#sampleText span");
+            startBtn.style.opacity = "0.6";
+
+            totalTimeSeconds = 900;
             
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    timerDisplay.innerText = timeLeft;
-                    calculateMetrics();
+                if(totalTimeSeconds > 0) {
+                    totalTimeSeconds--;
+                    updateTimerDisplay();
+                    evaluateLive();
                 } else {
-                    stopTest();
+                    finishExam();
                 }
             }, 1000);
         }
 
+        function updateTimerDisplay() {
+            let m = Math.floor(totalTimeSeconds / 60);
+            let s = totalTimeSeconds % 60;
+            timerDisplay.innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+        }
+
         typingInput.addEventListener("input", () => {
-            if (!isStarted) return;
+            if(!isExamActive) return;
+            evaluateLive();
             
-            const arrayChars = document.querySelectorAll("#sampleText span");
-            const typedValue = typingInput.value.split("");
-
-            let correctChars = 0;
-            arrayChars.forEach((charSpan, index) => {
-                const typedChar = typedValue[index];
-                if (typedChar == null) {
-                    charSpan.classList.remove("correct", "incorrect");
-                } else if (typedChar === charSpan.innerText) {
-                    charSpan.classList.add("correct");
-                    charSpan.classList.remove("incorrect");
-                    correctChars++;
-                } else {
-                    charSpan.classList.add("incorrect");
-                    charSpan.classList.remove("correct");
-                }
-            });
-
-            calculateMetrics();
-
-            if (typedValue.length >= arrayChars.length) {
-                stopTest();
+            // Auto finish if whole text typed
+            if(typingInput.value.length >= officialPassage.length) {
+                finishExam();
             }
         });
 
-        function calculateMetrics() {
-            const typedText = typingInput.value;
-            const wordsTyped = typedText.trim().split(/\s+/).filter(item => item !== "").length;
-            const timeElapsed = 60 - timeLeft;
+        function evaluateLive() {
+            const typedVal = typingInput.value;
+            const spans = passageBox.querySelectorAll("span");
             
-            // WPM calculation
-            let wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
-            wpmDisplay.innerText = wpm;
-
-            // Accuracy calculation
-            const arrayChars = document.querySelectorAll("#sampleText span");
+            let keyDepressions = typedVal.length;
             let errors = 0;
-            typedText.split("").forEach((char, index) => {
-                if (arrayChars[index] && char !== arrayChars[index].innerText) {
+
+            spans.forEach((span, i) => {
+                const typedChar = typedVal[i];
+                span.className = ""; // clear previous
+
+                if (typedChar == null) {
+                    if (i === typedVal.length) span.classList.add("current");
+                } else if (typedChar === span.innerText) {
+                    span.classList.add("correct");
+                } else {
+                    span.classList.add("incorrect");
                     errors++;
                 }
             });
 
-            let accuracy = typedText.length > 0 ? Math.max(0, Math.round(((typedText.length - errors) / typedText.length) * 100)) : 100;
-            accuracyDisplay.innerText = accuracy;
+            // Live metrics
+            keyCountDisplay.innerText = keyDepressions;
+            errorCountDisplay.innerText = errors;
+
+            let timeElapsed = 900 - totalTimeSeconds;
+            let words = keyDepressions / 5;
+            let wpm = timeElapsed > 0 ? Math.round((words / timeElapsed) * 60) : 0;
+            wpmCountDisplay.innerText = wpm;
+
+            return { keyDepressions, errors, wpm, timeElapsed };
         }
 
-        function stopTest() {
+        function finishExam() {
             clearInterval(timerInterval);
+            isExamActive = false;
             typingInput.disabled = true;
-            isStarted = false;
-            startBtn.innerText = "Start Test";
-            startBtn.disabled = false;
+
+            const stats = evaluateLive();
+
+            // Official Passing Logic Criteria
+            // Criteria: Key Depressions >= 1000 AND Errors < 25
+            const passed = (stats.keyDepressions >= 1000) && (stats.errors < 25);
+
+            const statusBadge = document.getElementById("statusBadge");
+            const resultReason = document.getElementById("resultReason");
+
+            if(passed) {
+                statusBadge.innerText = "QUALIFIED (PASSED)";
+                statusBadge.className = "status-badge status-pass";
+                resultReason.innerText = "Congratulations! You met the required minimum 1000 key depressions with less than 25 errors.";
+            } else {
+                statusBadge.innerText = "DISQUALIFIED (FAILED)";
+                statusBadge.className = "status-badge status-fail";
+                
+                if(stats.keyDepressions < 1000 && stats.errors >= 25) {
+                    resultReason.innerText = "Failed: Key depressions were less than 1000 and mistakes exceeded the 24 limit.";
+                } else if(stats.errors >= 25) {
+                    resultReason.innerText = "Failed: You exceeded the maximum limit of 24 errors (Made " + stats.errors + " errors).";
+                } else {
+                    resultReason.innerText = "Failed: Key depressions (" + stats.keyDepressions + ") were below the required 1000 limit.";
+                }
+            }
+
+            document.getElementById("resKeys").innerText = stats.keyDepressions;
+            document.getElementById("resErrors").innerText = stats.errors;
+            document.getElementById("resWpm").innerText = stats.wpm;
+            
+            let accuracy = stats.keyDepressions > 0 
+                ? Math.max(0, Math.round(((stats.keyDepressions - stats.errors) / stats.keyDepressions) * 100)) 
+                : 100;
+            document.getElementById("resAccuracy").innerText = accuracy + "%";
+
+            document.getElementById("resultOverlay").style.display = "flex";
         }
 
-        function resetTest() {
-            stopTest();
+        function closeModal() {
+            document.getElementById("resultOverlay").style.display = "none";
+            resetExam();
+        }
+
+        function resetExam() {
+            clearInterval(timerInterval);
+            isExamActive = false;
+            typingInput.disabled = true;
             typingInput.value = "";
-            timerDisplay.innerText = "60";
-            wpmDisplay.innerText = "0";
-            accuracyDisplay.innerText = "100";
-            loadSampleText();
+            
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
+            
+            timerDisplay.innerText = "15:00";
+            keyCountDisplay.innerText = "0";
+            errorCountDisplay.innerText = "0";
+            wpmCountDisplay.innerText = "0";
+            
+            renderPassage();
         }
     </script>
 </body>
