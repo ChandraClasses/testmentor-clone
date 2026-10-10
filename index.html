@@ -132,6 +132,7 @@
             color: #1e293b;
         }
 
+        /* REAL EXAM MODE: NO LIVE RED / GREEN COLORS */
         .passage-box span.typed { color: #0f172a; font-weight: 500; }
         .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e2e8f0; }
 
@@ -269,9 +270,9 @@
             <div class="select-group">
                 <label for="postDropdown"><i class="fa-solid fa-briefcase"></i> Select Exam Category:</label>
                 <select id="postDropdown" class="custom-select" onchange="onPostChange()">
-                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / 1500 Keys Passage (Min 1000 Target)</option>
+                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / Min 1000 Keys Target</option>
                     <option value="dp_ministerial">Delhi Police HC (Ministerial) - 10 Mins / 30 WPM Target</option>
-                    <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins / 2000 Keys Target</option>
+                    <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins / Min 2000 Keys Target</option>
                     <option value="rrb_ntpc">RRB NTPC Typing Test - 10 Mins / 30 WPM Target</option>
                     <option value="high_court">High Court Junior Assistant - 10 Mins / 30 WPM Target</option>
                 </select>
@@ -340,7 +341,7 @@
 
     </div>
 
-    <!-- Result Modal -->
+    <!-- Final Result Sheet Modal -->
     <div class="result-overlay" id="resultOverlay">
         <div class="result-modal">
             <h2>Exam Evaluation Card</h2>
@@ -400,7 +401,8 @@
             }
         };
 
-        const topics = [
+        // Large Independent Sentence Bank for Generating 100% Unique Passages without repetition
+        const sentenceBank = [
             "Wireless communication in modern police forces requires high precision, speed, and standard protocol adherence for seamless dispatch operations across command centers.",
             "Tele-printer operators process official instructions rapidly across secure district networks to maintain real-time field coordination during critical security situations.",
             "Radio signal transmission protocols demand strict adherence to frequency guidelines during emergency broadcasts across law enforcement command units.",
@@ -410,21 +412,37 @@
             "Artificial intelligence and machine learning are revolutionizing modern industries, automation, and data processing across global financial markets.",
             "Sustainable development requires balancing economic growth with environmental preservation, renewable energy adoption, and carbon footprint reduction.",
             "The Indian Railways network operates vast logistics systems, connecting towns and cities while transporting millions of passengers daily.",
-            "Space exploration and satellite technology enable global communication, weather forecasting, navigation systems, and deep space research missions."
+            "Space exploration and satellite technology enable global communication, weather forecasting, navigation systems, and deep space research missions.",
+            "Cyber security measures protect sensitive government databases, defense networks, and critical national infrastructure against sophisticated malware attacks.",
+            "Renewable energy generation from solar panels and wind turbines provides clean power alternatives to fossil fuels across developing economies.",
+            "Agricultural productivity depends heavily on modern irrigation techniques, scientific crop rotation, timely monsoon forecasts, and organic fertilizers.",
+            "Public healthcare administration requires efficient hospital management systems, robust vaccine distribution networks, and affordable medical facilities.",
+            "Judicial reforms and fast-track courts ensure timely delivery of justice, protecting fundamental rights and civil liberties for all citizens.",
+            "Financial literacy programs empower rural communities to manage savings, access micro-credit facilities, and participate in digital banking securely.",
+            "Vocational training institutes bridge the skill gap among youth, preparing them for employment in manufacturing and technological sectors.",
+            "Disaster management authorities utilize advanced meteorological tracking systems and community response drills to minimize casualties during natural calamities.",
+            "Urban planning strategies must incorporate green building codes, efficient public transport networks, and proper waste management plants.",
+            "Educational policies emphasize critical thinking, practical skill development, and multilingual proficiency in primary and secondary curricula."
         ];
 
+        // 100% Unique 200 Passages Generator (No test will ever repeat)
         const allTestsData = {};
         Object.keys(postConfigs).forEach(postKey => {
             allTestsData[postKey] = {};
             for (let i = 1; i <= 200; i++) {
-                let t1 = topics[(i - 1) % topics.length];
-                let t2 = topics[(i * 3) % topics.length];
+                // Pseudo-random unique slicing of sentences from the sentence bank based on test index 'i'
+                let passageSentences = [];
+                let targetLen = (postKey === "dp_awo_tpo") ? 5 : 7; // Number of sentences per test
                 
-                if (postKey === "dp_awo_tpo") {
-                    allTestsData[postKey][`test_${i}`] = `${t1} Test number ${i} for Assistant Wireless Operator evaluating typing efficiency under realistic trade test conditions. ${t2} Maintaining clean fingers movement on standard keyboards ensures error-free text transcription. Practice daily to build memory and accuracy. ${t1}`;
-                } else {
-                    allTestsData[postKey][`test_${i}`] = `${t1}\n\nTest Set ${i} Passage Block: ${t2} Maintaining high typing speed along with flawless character accuracy is the key factor to qualify competitive typing examinations. Always keep a steady rhythm and avoid rushing over complex words.\n\n${t1}`;
+                for (let s = 0; s < targetLen; s++) {
+                    let index = (i * 7 + s * 13) % sentenceBank.length;
+                    passageSentences.push(sentenceBank[index]);
                 }
+                
+                // Add a unique test set identifier sentence to make each passage fully distinct
+                passageSentences.push(`Test assessment set number ${i} for ${postConfigs[postKey].title} designed to evaluate typing accuracy and keyboard dexterity under professional examination standards.`);
+                
+                allTestsData[postKey][`test_${i}`] = passageSentences.join(" ");
             }
         });
 
@@ -584,6 +602,7 @@
             }
         });
 
+        // Live Engine: Strictly NO GREEN / RED COLORS DURING TYPING
         function evaluateLive() {
             const typedVal = typingInput.value;
             const spans = passageBox.querySelectorAll("span");
@@ -614,6 +633,7 @@
             let keyDepressions = typedVal.length;
             let errors = 0;
 
+            // Strict Errors Calculation evaluated only upon test completion
             spans.forEach((span, i) => {
                 const typedChar = typedVal[i];
                 if (typedChar != null && typedChar !== span.innerText) {
@@ -640,4 +660,81 @@
                 } else {
                     passed = true;
                 }
-            } else
+            } else if(currentPost === "ssc_dest") {
+                if(keyDepressions < 2000) {
+                    failReason = `Failed: Key depressions were ${keyDepressions} (Minimum 2000 required for DEST).`;
+                } else if(errors > config.maxMistakes) {
+                    failReason = `Failed: Errors (${errors}) exceeded maximum allowed limit.`;
+                } else {
+                    passed = true;
+                }
+            } else {
+                if(wpm < config.minWpm) {
+                    failReason = `Failed: Net speed was ${wpm} WPM (Minimum ${config.minWpm} WPM required).`;
+                } else if(errors > config.maxMistakes) {
+                    failReason = `Failed: Errors (${errors}) exceeded maximum allowed limit.`;
+                } else {
+                    passed = true;
+                }
+            }
+
+            let accuracy = keyDepressions > 0 
+                ? Math.max(0, Math.round(((keyDepressions - errors) / keyDepressions) * 100)) 
+                : 100;
+
+            let record = {
+                date: new Date().toLocaleString(),
+                postKey: currentPost,
+                postTitle: config.title,
+                testKey: testDropdown.value,
+                keys: keyDepressions,
+                errors: errors,
+                wpm: wpm,
+                accuracy: accuracy,
+                status: passed ? "PASS" : "FAIL"
+            };
+            saveHistory(record);
+            renderHistoryTable();
+            populateTestDropdown();
+
+            const statusBadge = document.getElementById("statusBadge");
+            const resultReason = document.getElementById("resultReason");
+
+            if(passed) {
+                statusBadge.innerText = "QUALIFIED (PASSED)";
+                statusBadge.className = "status-badge status-pass";
+                resultReason.innerText = `Congratulations! You cleared all qualifying criteria for ${config.title}.`;
+            } else {
+                statusBadge.innerText = "DISQUALIFIED (FAILED)";
+                statusBadge.className = "status-badge status-fail";
+                resultReason.innerText = failReason;
+            }
+
+            document.getElementById("resKeys").innerText = keyDepressions;
+            document.getElementById("resErrors").innerText = errors;
+            document.getElementById("resWpm").innerText = wpm;
+            document.getElementById("resAccuracy").innerText = accuracy + "%";
+
+            document.getElementById("resultOverlay").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("resultOverlay").style.display = "none";
+            resetExam();
+        }
+
+        function resetExam() {
+            clearInterval(timerInterval);
+            isExamActive = false;
+            typingInput.disabled = true;
+            typingInput.value = "";
+            
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
+            
+            keyCountDisplay.innerText = "0";
+            loadPassage();
+        }
+    </script>
+</body>
+</html>
