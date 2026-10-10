@@ -1,89 +1,96 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestMentor - Professional Government Exam Typing Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>TestMentor - Government Exam Typing Practice Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #1e3a8a;
             --primary-light: #2563eb;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --bg: #e2e8f0;
+            --primary-dark: #1e293b;
+            --success: #15803d;
+            --success-bg: #dcfce7;
+            --danger: #b91c1c;
+            --danger-bg: #fee2e2;
+            --bg: #f1f5f9;
             --card-bg: #ffffff;
             --text: #0f172a;
             --text-muted: #64748b;
             --border: #cbd5e1;
-            --book-bg: #fdfbf7;
+            --book-bg: #fafaf9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 2rem; }
 
-        header { background: #ffffff; border-bottom: 2px solid #cbd5e1; position: sticky; top: 0; z-index: 1000; }
-        .navbar { max-width: 1300px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .badge-exam { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        header { background: #ffffff; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .navbar { max-width: 1350px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .badge-exam { background: #fef3c7; color: #92400e; padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .container { max-width: 1300px; margin: 1.5rem auto; padding: 0 1rem; }
+        .container { max-width: 1350px; margin: 1.5rem auto; padding: 0 1rem; }
 
         .selection-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            padding: 1.2rem 1.8rem;
             margin-bottom: 1.2rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
             align-items: center;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
-        .select-group { display: flex; flex-direction: column; gap: 5px; }
-        .select-group label { font-weight: 700; font-size: 0.88rem; color: var(--primary); }
+        .select-group { display: flex; flex-direction: column; gap: 6px; }
+        .select-group label { font-weight: 700; font-size: 0.9rem; color: var(--primary); display: flex; align-items: center; gap: 6px; }
 
         select.custom-select {
-            padding: 0.55rem 1rem;
+            padding: 0.65rem 1rem;
             border: 2px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.95rem;
             font-weight: 600;
             outline: none;
             cursor: pointer;
             background: white;
+            color: var(--text);
+            transition: border-color 0.2s;
         }
         select.custom-select:focus { border-color: var(--primary-light); }
 
         .rules-banner {
             background: #eff6ff;
-            border-left: 4px solid var(--primary-light);
-            padding: 0.8rem 1.2rem;
-            border-radius: 6px;
+            border-left: 5px solid var(--primary-light);
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
             margin-bottom: 1.2rem;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: #1e40af;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .exam-top-bar {
             background: #0f172a;
             color: white;
-            padding: 0.9rem 1.5rem;
-            border-radius: 10px 10px 0 0;
+            padding: 1rem 1.8rem;
+            border-radius: 12px 12px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-family: 'Roboto Mono', monospace;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .stats-group { display: flex; gap: 1.8rem; font-size: 0.95rem; }
-        .stat-box span { color: #38bdf8; font-weight: bold; }
+        .stats-group { display: flex; gap: 2rem; font-size: 1rem; flex-wrap: wrap; }
+        .stat-box { display: flex; align-items: center; gap: 6px; }
+        .stat-box span { color: #38bdf8; font-weight: 700; font-size: 1.1rem; }
 
         .book-container {
             display: grid;
@@ -91,16 +98,16 @@
             background: var(--card-bg);
             border: 2px solid var(--border);
             border-top: none;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
             overflow: hidden;
-            min-height: 480px;
+            min-height: 520px;
         }
 
         .book-page-left {
             background: var(--book-bg);
             border-right: 2px dashed var(--border);
-            padding: 1.5rem;
+            padding: 1.8rem;
             display: flex;
             flex-direction: column;
         }
@@ -110,34 +117,35 @@
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid #e5e7eb;
+            letter-spacing: 0.8px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
         }
 
         .passage-box {
-            height: 380px;
+            height: 400px;
             overflow-y: auto;
             font-family: 'Roboto Mono', monospace;
             font-size: 1.05rem;
-            line-height: 1.9;
+            line-height: 2;
             user-select: none;
             white-space: pre-wrap;
-            word-break: break-all;
-            padding-right: 8px;
+            word-break: break-word;
+            padding-right: 12px;
+            color: #334155;
         }
 
-        .passage-box span.correct { color: #15803d; background-color: #dcfce7; }
-        .passage-box span.incorrect { color: #b91c1c; background-color: #fecaca; }
-        .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e0e7ff; }
+        .passage-box span.correct { color: #15803d; background-color: #dcfce7; border-radius: 2px; }
+        .passage-box span.incorrect { color: #b91c1c; background-color: #fecaca; border-radius: 2px; }
+        .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e0e7ff; font-weight: bold; }
 
         .book-page-right {
             background: #ffffff;
-            padding: 1.5rem;
+            padding: 1.8rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -145,16 +153,18 @@
 
         textarea.typing-textarea {
             width: 100%;
-            height: 380px;
-            padding: 1rem;
+            height: 400px;
+            padding: 1.2rem;
             font-family: 'Roboto Mono', monospace;
             font-size: 1.05rem;
-            line-height: 1.9;
+            line-height: 2;
             border: 2px solid var(--border);
             border-radius: 8px;
             outline: none;
             resize: none;
-            background: #fafafa;
+            background: #f8fafc;
+            color: var(--text);
+            transition: all 0.2s;
         }
         textarea.typing-textarea:focus {
             border-color: var(--primary-light);
@@ -162,12 +172,12 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.2rem; }
 
         .btn {
-            padding: 0.65rem 1.6rem;
+            padding: 0.75rem 1.8rem;
             font-weight: 700;
-            border-radius: 6px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
             font-size: 0.95rem;
@@ -180,55 +190,59 @@
         .btn-start { background: var(--primary-light); color: white; }
         .btn-start:hover { background: var(--primary); }
         .btn-reset { background: #64748b; color: white; }
+        .btn-reset:hover { background: #475569; }
         .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #991b1b; }
 
         .history-section {
             margin-top: 2.5rem;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.8rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
-        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
         .table-responsive { overflow-x: auto; }
 
         table.history-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
-        table.history-table th, table.history-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        table.history-table th, table.history-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); }
         table.history-table th { background: #f8fafc; font-weight: 700; color: var(--primary); }
 
-        .badge-pass { background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
-        .badge-fail { background: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+        .badge-pass { background: #dcfce7; color: #15803d; padding: 3px 10px; border-radius: 6px; font-weight: 700; }
+        .badge-fail { background: #fee2e2; color: #b91c1c; padding: 3px 10px; border-radius: 6px; font-weight: 700; }
 
         .result-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.75);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(4px);
         }
 
         .result-modal {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
+            padding: 2.2rem;
+            border-radius: 16px;
+            max-width: 540px;
+            width: 92%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
         }
 
         .status-badge {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
-            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             border-radius: 30px;
-            margin: 1rem 0;
+            margin: 1.2rem 0;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .status-pass { background: #dcfce7; color: #15803d; border: 2px solid #16a34a; }
@@ -241,14 +255,15 @@
             margin: 1.5rem 0;
             text-align: left;
             background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
         }
 
-        .eval-item label { font-size: 0.8rem; color: var(--text-muted); display: block; }
-        .eval-item val { font-weight: 700; font-size: 1.1rem; }
+        .eval-item label { font-size: 0.8rem; color: var(--text-muted); display: block; font-weight: 600; text-transform: uppercase; }
+        .eval-item val { font-weight: 800; font-size: 1.25rem; color: var(--text); }
 
-        @media (max-width: 900px) {
+        @media (max-width: 920px) {
             .book-container { grid-template-columns: 1fr; }
             .book-page-left { border-right: none; border-bottom: 2px dashed var(--border); }
         }
@@ -258,7 +273,7 @@
 
     <header>
         <div class="navbar">
-            <a href="#" class="logo"><i class="fa-solid fa-book-open"></i> TestMentor <span class="badge-exam">Book Layout</span></a>
+            <a href="#" class="logo"><i class="fa-solid fa-keyboard"></i> TestMentor <span class="badge-exam">Govt Exam Platform</span></a>
         </div>
     </header>
 
@@ -266,18 +281,18 @@
 
         <div class="selection-card">
             <div class="select-group">
-                <label for="postDropdown"><i class="fa-solid fa-briefcase"></i> Select Exam Category:</label>
+                <label for="postDropdown"><i class="fa-solid fa-briefcase"></i> Exam Category & Target:</label>
                 <select id="postDropdown" class="custom-select" onchange="onPostChange()">
-                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / Min 1000 Keys</option>
-                    <option value="dp_ministerial">Delhi Police HC (Ministerial) - 10 Mins / 30 WPM</option>
-                    <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins / Min 2000 Keys</option>
-                    <option value="rrb_ntpc">RRB NTPC Typing Test - 10 Mins / 30 WPM</option>
-                    <option value="high_court">High Court Junior Assistant - 10 Mins / 30 WPM</option>
+                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins | Passage Length: ~1500 Keys (Min Pass: 1000 Keys, Max Errors: 24)</option>
+                    <option value="dp_ministerial">Delhi Police HC (Ministerial) - 10 Mins | Target: 30 WPM</option>
+                    <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins | Target: Min 2000 Keys</option>
+                    <option value="rrb_ntpc">RRB NTPC Typing Test - 10 Mins | Target: 30 WPM</option>
+                    <option value="high_court">High Court Junior Assistant - 10 Mins | Target: 30 WPM</option>
                 </select>
             </div>
 
             <div class="select-group">
-                <label for="testDropdown"><i class="fa-solid fa-list-check"></i> Select Test Set:</label>
+                <label for="testDropdown"><i class="fa-solid fa-list-check"></i> Unique Test Set (1 to 200):</label>
                 <select id="testDropdown" class="custom-select" onchange="onTestChange()"></select>
             </div>
         </div>
@@ -285,24 +300,29 @@
         <div class="rules-banner" id="rulesBox"></div>
 
         <div class="exam-top-bar">
-            <div class="stat-box">Time Left: <span id="timerDisplay">15:00</span></div>
+            <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
             <div class="stats-group">
-                <div class="stat-box">Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box">Errors: <span id="errorCount">0</span></div>
-                <div class="stat-box">Net Speed: <span id="wpmCount">0</span> WPM</div>
+                <div class="stat-box"><i class="fa-solid fa-font"></i> Keys: <span id="keyCount">0</span></div>
+                <div class="stat-box"><i class="fa-solid fa-triangle-exclamation"></i> Errors: <span id="errorCount">0</span></div>
+                <div class="stat-box"><i class="fa-solid fa-gauge-high"></i> Net Speed: <span id="wpmCount">0</span> WPM</div>
             </div>
         </div>
 
         <div class="book-container">
             <div class="book-page-left">
-                <div class="page-header"><i class="fa-solid fa-file-lines"></i> Passage Text (Read & Type)</div>
+                <div class="page-header">
+                    <span><i class="fa-solid fa-file-lines"></i> Official Reading Passage</span>
+                    <span id="charCountTag" style="font-size: 0.75rem; color: #64748b; font-weight: normal;">Length: 0 chars</span>
+                </div>
                 <div class="passage-box" id="passageBox"></div>
             </div>
 
             <div class="book-page-right">
                 <div>
-                    <div class="page-header"><i class="fa-solid fa-keyboard"></i> Candidate Typing Space</div>
-                    <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Test' button to begin typing here..." disabled></textarea>
+                    <div class="page-header">
+                        <span><i class="fa-solid fa-terminal"></i> Candidate Typing Workspace</span>
+                    </div>
+                    <textarea class="typing-textarea" id="typingInput" placeholder="Click 'Start Test' button to begin typing..." disabled></textarea>
                 </div>
                 
                 <div class="controls">
@@ -314,8 +334,8 @@
 
         <div class="history-section">
             <div class="history-header">
-                <h3><i class="fa-solid fa-clock-rotate-left"></i> Attempt History & Scorecard Log</h3>
-                <button class="btn btn-danger" onclick="clearHistory()" style="padding: 0.4rem 0.8rem; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Clear Log</button>
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Candidate Performance Log</h3>
+                <button class="btn btn-danger" onclick="clearHistory()" style="padding: 0.4rem 0.9rem; font-size:0.85rem;"><i class="fa-solid fa-trash"></i> Clear Log</button>
             </div>
             <div class="table-responsive">
                 <table class="history-table">
@@ -324,15 +344,15 @@
                             <th>Date & Time</th>
                             <th>Exam Post</th>
                             <th>Test Set</th>
-                            <th>Keys Pressed</th>
+                            <th>Key Depressions</th>
                             <th>Errors</th>
                             <th>Net WPM</th>
                             <th>Accuracy</th>
-                            <th>Status</th>
+                            <th>Result Status</th>
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>
+                        <tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts logged yet. Select a test and begin!</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -342,10 +362,10 @@
 
     <div class="result-overlay" id="resultOverlay">
         <div class="result-modal">
-            <h2>Exam Evaluation Card</h2>
+            <h2>Official Evaluation Result</h2>
             <div id="statusBadge" class="status-badge"></div>
             
-            <p id="resultReason" style="font-size: 0.9rem; color: #475569;"></p>
+            <p id="resultReason" style="font-size: 0.95rem; color: #475569; margin-bottom: 0.5rem;"></p>
 
             <div class="eval-grid">
                 <div class="eval-item">
@@ -361,12 +381,12 @@
                     <val id="resWpm">0</val>
                 </div>
                 <div class="eval-item">
-                    <label>Accuracy</label>
+                    <label>Accuracy Rate</label>
                     <val id="resAccuracy">0%</val>
                 </div>
             </div>
 
-            <button class="btn btn-start" onclick="closeModal()" style="width:100%; justify-content:center;">Try Next / Retake</button>
+            <button class="btn btn-start" onclick="closeModal()" style="width:100%; justify-content:center;">Continue Practice</button>
         </div>
     </div>
 
@@ -374,82 +394,216 @@
         const postConfigs = {
             dp_awo_tpo: {
                 title: "Delhi Police HC (AWO/TPO)",
-                durationSec: 900, reqKeys: 1000, maxMistakes: 24, minWpm: 13.3,
-                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Target: Minimum 1000 Key Depressions | Disqualification: 25 or more errors = FAIL."
+                durationSec: 900, reqKeys: 1000, targetLength: 1500, maxMistakes: 24, minWpm: 13.3,
+                rulesText: "<strong>Official DP Rule:</strong> Duration: 15 Mins | Passage Length: ~1500 Key Depressions (approx. 290 Words) | Pass Criteria: Minimum 1000 Key Depressions AND maximum 24 mistakes allowed. (25 or more errors = Direct Disqualification)."
             },
             dp_ministerial: {
                 title: "Delhi Police HC (Ministerial)",
-                durationSec: 600, reqKeys: 1500, maxMistakes: 50, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Speed Target: 30 WPM Minimum."
+                durationSec: 600, reqKeys: 1500, targetLength: 2600, maxMistakes: 50, minWpm: 30,
+                rulesText: "<strong>Official DP Rule:</strong> Duration: 10 Mins | Pass Criteria: Minimum speed of 30 WPM with errors within maximum allowed threshold."
             },
             ssc_dest: {
                 title: "SSC CGL / CHSL DEST",
-                durationSec: 900, reqKeys: 2000, maxMistakes: 100, minWpm: 27,
-                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Target: Minimum 2000 Key Depressions."
+                durationSec: 900, reqKeys: 2000, targetLength: 2700, maxMistakes: 100, minWpm: 27,
+                rulesText: "<strong>Official SSC DEST Rule:</strong> Duration: 15 Mins | Pass Criteria: Minimum 2000 Key Depressions with less than maximum allowed error percentage."
             },
             rrb_ntpc: {
                 title: "RRB NTPC Typing Test",
-                durationSec: 600, reqKeys: 1500, maxMistakes: 75, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM English."
+                durationSec: 600, reqKeys: 1500, targetLength: 2600, maxMistakes: 75, minWpm: 30,
+                rulesText: "<strong>Official RRB Rule:</strong> Duration: 10 Mins | Pass Criteria: Minimum 30 WPM speed in English typing with maximum 5% mistakes allowed."
             },
             high_court: {
                 title: "High Court Junior Assistant",
-                durationSec: 600, reqKeys: 1500, maxMistakes: 60, minWpm: 30,
-                rulesText: "<strong>Official Criteria:</strong> Time: 10 Mins | Target: 30 WPM."
+                durationSec: 600, reqKeys: 1500, targetLength: 2600, maxMistakes: 60, minWpm: 30,
+                rulesText: "<strong>Official High Court Rule:</strong> Duration: 10 Mins | Pass Criteria: Minimum 30 WPM typing speed with clean formatting and minimal errors."
             }
         };
 
-        // Long Sub-blocks (Ensures each test has 1500+ characters i.e. guaranteed 1000+ keys)
-        const longBasePools = {
-            dp_awo_tpo: [
-                "Wireless communication in modern police forces requires high precision, speed, and standard protocol adherence for seamless dispatch operations. Tele-printer operators process official instructions rapidly across secure district networks to maintain real-time field coordination. Radio signal transmission protocols demand strict adherence to frequency guidelines during emergency security broadcasts. Assistant Wireless Operators manage technical signals, ensuring accurate logging of inter-state security communications. Digital encryption systems protect confidential police dispatches against unauthorized interception across regional command centers. The Staff Selection Commission conducts the open competitive trade test for Delhi Police Head Constable Assistant Wireless Operator and Tele-Printer Operator posts. Candidates must log at least 1000 key depressions in 15 minutes. Every operator must adhere strictly to established protocols to ensure error-free transmission during emergency situations.",
-                "In emergency management systems, tele-printer operators handle classified encrypted messages requiring high concentration and precise key typing. The official evaluation process counts all typed characters including spaces and punctuation marks. Maintaining a consistent typing rhythm prevents typing strain and reduces error rates under official test center conditions. Assistant Wireless Operators play a crucial role in modern police communications, ensuring seamless information flow between police stations and central control rooms. The 15-minute English word processing trade test is qualifying in nature, evaluating both keyboard speed and operational accuracy. Candidates are required to achieve a minimum threshold of 1000 key depressions. Mistakes exceeding 24 will result in immediate disqualification as per official police recruitment rules and regulations."
-            ],
-            dp_ministerial: [
-                "Delhi Police Head Constable Ministerial staff manage administrative file routing, official memoranda, leave registers, and executive correspondence efficiently across central headquarters. Clerical proficiency demands a minimum qualifying speed of 30 words per minute in English typing over a 10-minute duration. Efficient administrative functioning in law enforcement relies heavily on prompt record maintenance, digital documentation, and accurate report generation. Candidates aiming for ministerial posts must maintain balanced speed and accuracy to clear qualifying cutoffs. Personnel documentation and service book digitization require meticulous data entry standards across all district units. Administrative transparency depends on accurate record maintenance and prompt dispatch of official department notifications.",
-                "Clerical proficiency in police headquarters requires quick processing of leave applications, budget allocations, and office circulars. Head Constable Ministerial cadres manage routine office files, typing internal notes and official memoranda with standard layout speed. Modern administrative systems demand digital competence for handling official emails, circulars, and departmental correspondence securely under strict supervision."
-            ],
-            ssc_dest: [
-                "The Data Entry Speed Test evaluates data entry candidates for central ministries with strict error threshold limits. Candidates must complete a minimum of 2000 key depressions within 15 minutes with high accuracy. Modern public administration depends on rapid data logging, digital record maintenance, and electronic archival management across government portals. Regular timed practice improves keyboard muscle memory. Central Secretariat services require fast keyboard transcription skills for managing legislative bills and committee reports. Statistical analysis units process census metrics and developmental indicators for national planning commissions.",
-                "Data entry operations in central government departments require absolute precision and speed. Operators process extensive statistical records, financial statements, and departmental reports daily. Maintaining high accuracy while crossing the 2000 key depression threshold ensures successful qualification in competitive DEST examinations conducted annually."
-            ],
-            rrb_ntpc: [
-                "Railway Recruitment Boards evaluate typing proficiency for clerical cadres handling train scheduling and freight movement records. Indian Railways network requires fast and accurate entry of operational parameters, signaling logs, and passenger reservation details. Station clerical staff handle inventory registers, dispatch records, and official communications with consistent speed. Locomotive maintenance schedules and track utilization reports require verified clerical documentation. Passenger amenity monitoring cells record feedback logs and grievance redressal updates for zonal railway divisions.",
-                "Indian Railways operates extensive logistics networks requiring accurate data entry for signaling logs, station management, and passenger reservation processing. Clerical staff must process hundreds of passenger booking logs and freight movement sheets daily under strict time constraints to maintain seamless railway operations."
-            ],
-            high_court: [
-                "High Court junior assistants transcribe judicial orders, judgment proceedings, and legal notices with strict formatting accuracy. The qualifying standard requires a minimum typing speed of 30 words per minute. Legal transcription requires attention to legal terminology, statutory citations, and court decree formatting under judicial supervision. Appellate tribunal secretariats maintain structured electronic dockets for civil and criminal litigation filings. Constitutional bench hearings generate extensive transcripts requiring expert typing speed and legal vocabulary knowledge. District judiciary record rooms digitize legacy case files to streamline archival search operations.",
-                "Judicial administration relies on quick and error-free typing of affidavits, petitions, and formal court decrees. Court clerks must transcribe complex legal dictations with rigorous attention to punctuation and legal formatting standards to satisfy high court qualification benchmarks."
-            ]
-        };
+        // Massive Multi-Topic Text Repository for Completely Distinct Passages Across All 200 Tests
+        const topicBank = [
+            {
+                topic: "Public Administration & Governance",
+                sentences: [
+                    "Good governance forms the bedrock of sustainable economic advancement and social progress in modern democratic societies.",
+                    "Administrative transparency ensures that citizens remain informed about executive decisions and public expenditure policies.",
+                    "E-governance initiatives streamline administrative processes and eliminate delays in public service delivery mechanisms.",
+                    "Accountability in public institutions builds mutual trust between governance bodies and the citizens they serve.",
+                    "Digital infrastructure empowers local governance units to deliver timely administrative assistance across rural districts.",
+                    "Effective policy implementation requires seamless coordination among central, state, and local administrative bodies."
+                ]
+            },
+            {
+                topic: "Science, Space & Astronomy",
+                sentences: [
+                    "Space exploration expands human knowledge regarding cosmic origin and planetary evolution across galaxies.",
+                    "Advanced satellite technology provides critical real-time meteorological observations for disaster prediction systems.",
+                    "Lunar exploration missions collect soil samples to analyze elemental abundances and water ice reserves in polar regions.",
+                    "Observational astrophysics relies on sophisticated space telescopes to study distant star clusters and cosmic microwave radiation.",
+                    "Deep space communication networks maintain constant telemetry links with robotic probes traveling beyond interplanetary boundaries.",
+                    "Orbital trajectory calculations demand high mathematical precision to ensure safe navigation during interplanetary insertion maneuvers."
+                ]
+            },
+            {
+                topic: "Indian History & Heritage",
+                sentences: [
+                    "Ancient trade routes facilitated cultural exchange and commercial prosperity across coastal and inland urban settlements.",
+                    "Architectural monuments reflect the artistic ingenuity and engineering prowess of historical Indian dynasties.",
+                    "The struggle for national independence united diverse regions under a common commitment toward self-governance.",
+                    "Literary traditions preserved classical philosophies and scientific treatises through carefully copied manuscripts.",
+                    "Maritime trade along ancient Indian ports connected domestic merchant guilds with Mediterranean and Far Eastern marketplaces.",
+                    "Historical preservation projects safeguard valuable archaeological sites for educational and cultural enrichment."
+                ]
+            },
+            {
+                topic: "Wildlife, Forest & Ecology",
+                sentences: [
+                    "Forest ecosystem management preserves biological diversity and protects endangered fauna species from habitat fragmentation.",
+                    "Protected wildlife sanctuaries provide safe corridors for animal migration and natural population regeneration.",
+                    "Conservation initiatives focus on restoring degraded forest habitats and preventing illegal encroachment into wildlife zones.",
+                    "Biodiversity hotspots host endemic plant species that support regional ecological stability and watershed health.",
+                    "Community reserve programs encourage local population participation in protecting forest flora and fauna resources.",
+                    "Reforestation drives enhance soil moisture retention and prevent desertification along fringe forest boundaries."
+                ]
+            },
+            {
+                topic: "Law, Constitution & Judiciary",
+                sentences: [
+                    "The constitution guarantees fundamental rights while upholding the rule of law across all statutory frameworks.",
+                    "Judicial independence ensures fair adjudication of civil disputes and constitutional interpretation matters.",
+                    "Legal aid mechanisms afford equitable legal representation to underprivileged litigants in municipal courts.",
+                    "Legislative enactments establish clear guidelines for corporate compliance, public safety, and environmental protection.",
+                    "Appellate tribunals systematically review lower court decisions to maintain judicial consistency across jurisdictions.",
+                    "Statutory amendments modernize legal frameworks to address emerging technological and commercial challenges."
+                ]
+            },
+            {
+                topic: "Technology, AI & Cyber Security",
+                sentences: [
+                    "Artificial intelligence systems enhance analytical capabilities across healthcare, finance, and industrial automation fields.",
+                    "Cyber security protocols protect critical information infrastructure against unauthorized network intrusions and cyber threats.",
+                    "Cloud computing architectures enable seamless data synchronization and resilient enterprise storage solutions.",
+                    "Encryption algorithms safeguard transmitted data packages across open telecommunication networks.",
+                    "Robotic process automation reduces manual intervention in repetitive operational workflows.",
+                    "Machine learning models analyze complex data patterns to support accurate predictive decision-making."
+                ]
+            },
+            {
+                topic: "Economic Policy & International Trade",
+                sentences: [
+                    "Fiscal policy management balances public expenditure with revenue generation to maintain economic stability.",
+                    "International trade agreements foster cross-border commercial opportunities and streamline customs clearance procedures.",
+                    "Financial inclusion drives broaden access to banking services among rural micro-enterprises and agricultural households.",
+                    "Industrial growth corridors stimulate regional employment opportunities and attract capital investment.",
+                    "Monetary policy adjustments regulate inflation rates while fostering steady domestic capital formation.",
+                    "Export promotion schemes boost domestic manufacturing competitiveness in global markets."
+                ]
+            },
+            {
+                topic: "Agriculture & Rural Development",
+                sentences: [
+                    "Sustainable agricultural practices improve soil fertility while minimizing reliance on artificial chemical inputs.",
+                    "Micro-irrigation networks optimize water utilization efficiency across drought-prone agricultural farming belts.",
+                    "Crop diversification strategies safeguard agrarian livelihoods against climate variability and market price fluctuations.",
+                    "Rural infrastructure development strengthens connectivity between village farming clusters and urban wholesale markets.",
+                    "Soil health card schemes assist farmers in applying balanced nutrient dosages tailored to specific crop demands.",
+                    "Agricultural research institutions develop climate-resilient seed varieties to ensure national food security."
+                ]
+            },
+            {
+                topic: "Renewable Energy & Environment",
+                sentences: [
+                    "Solar power installations contribute significantly toward expanding clean energy capacity across industrial zones.",
+                    "Wind farm developments utilize coastal atmospheric currents to generate sustainable electrical energy.",
+                    "Energy storage technologies stabilize grid systems by managing fluctuations in renewable power generation.",
+                    "Environmental impact assessments evaluate potential ecological consequences prior to launching major infrastructure projects.",
+                    "Green hydrogen initiatives aim to decarbonize heavy industrial manufacturing processes.",
+                    "Waste-to-energy conversion facilities process municipal solid waste while producing clean electrical power."
+                ]
+            },
+            {
+                topic: "Law Enforcement & Telecommunications",
+                sentences: [
+                    "Tactical radio communication networks enable swift command dispatches during multi-agency emergency operations.",
+                    "Wireless telecommunication towers maintain continuous voice and data relays across city police command posts.",
+                    "Emergency response operators log critical dispatch information quickly to ensure rapid field unit deployment.",
+                    "Digital encryption protects sensitive operational communication against unauthorized interception during police operations.",
+                    "Tele-printer terminals record verbatim transmission logs for official departmental archive repositories.",
+                    "Frequency management cells monitor radio channels continuously to prevent signal interference during critical dispatches."
+                ]
+            }
+        ];
 
-        // Generating 200 Guaranteed Long Passages (1500+ characters each)
-        const allTestsData = {};
+        function pseudoRandom(seed) {
+            let x = Math.sin(seed++) * 10000;
+            return x - Math.floor(x);
+        }
+
+        const generatedPassages = {};
+
         Object.keys(postConfigs).forEach(postKey => {
-            allTestsData[postKey] = {};
-            let pool = longBasePools[postKey];
+            generatedPassages[postKey] = {};
+            const targetLength = postConfigs[postKey].targetLength;
+
             for (let i = 1; i <= 200; i++) {
-                let p1 = pool[(i - 1) % pool.length];
-                let p2 = pool[(i * 3) % pool.length];
-                
-                // Combining pools to guarantee well over 1000 key depressions
-                allTestsData[postKey][`test_${i}`] = `${p1}\n\nAdditional Test Set ${i} expansion paragraph: Continue typing with absolute focus and steady finger rhythm. Ensure your total character count crosses the required threshold while keeping error rates minimal. ${p2}`;
+                let seed = (i * 1543) + postKey.length * 37;
+                let textParts = [];
+
+                // Select distinct primary and secondary topics based on test set index
+                let topicIdx1 = Math.floor(pseudoRandom(seed++) * topicBank.length);
+                let topicIdx2 = (topicIdx1 + Math.floor(pseudoRandom(seed++) * (topicBank.length - 1)) + 1) % topicBank.length;
+                let topicIdx3 = (topicIdx2 + Math.floor(pseudoRandom(seed++) * (topicBank.length - 1)) + 1) % topicBank.length;
+
+                let selectedTopics = [topicBank[topicIdx1], topicBank[topicIdx2], topicBank[topicIdx3]];
+                let currentLen = 0;
+
+                while (currentLen < targetLength) {
+                    let topic = selectedTopics[Math.floor(pseudoRandom(seed++) * selectedTopics.length)];
+                    let sentenceIdx = Math.floor(pseudoRandom(seed++) * topic.sentences.length);
+                    let sentence = topic.sentences[sentenceIdx];
+
+                    // Introduce natural variations so no sentence is identical
+                    let dynamicAdditions = [
+                        " Furthermore, structured execution remains vital.",
+                        " Moreover, continuous evaluation ensures quality outcome.",
+                        " In addition, systematic monitoring enhances overall efficiency.",
+                        " Consequently, standardized procedures must be followed.",
+                        " Indeed, thorough operational readiness guarantees optimal success."
+                    ];
+                    let variation = dynamicAdditions[Math.floor(pseudoRandom(seed++) * dynamicAdditions.length)];
+                    let fullSentence = sentence + variation;
+
+                    textParts.push(fullSentence);
+                    currentLen += fullSentence.length + 1;
+                }
+
+                let fullText = textParts.join(" ");
+
+                // Trim cleanly to exact target length around paragraph or sentence boundary
+                if (fullText.length > targetLength + 40) {
+                    fullText = fullText.substring(0, targetLength + 20);
+                    let lastDot = fullText.lastIndexOf('.');
+                    if (lastDot > targetLength - 120) {
+                        fullText = fullText.substring(0, lastDot + 1);
+                    }
+                }
+
+                generatedPassages[postKey][`test_${i}`] = fullText.trim();
             }
         });
 
         function getHistory() {
-            return JSON.parse(localStorage.getItem("typing_history") || "[]");
+            return JSON.parse(localStorage.getItem("typing_history_v3") || "[]");
         }
 
         function saveHistory(record) {
             let history = getHistory();
             history.unshift(record);
-            localStorage.setItem("typing_history", JSON.stringify(history));
+            localStorage.setItem("typing_history_v3", JSON.stringify(history));
         }
 
         function clearHistory() {
-            if(confirm("Kya aap apni saari attempt history delete karna chahte hain?")) {
-                localStorage.removeItem("typing_history");
+            if(confirm("Are you sure you want to delete all saved test attempts?")) {
+                localStorage.removeItem("typing_history_v3");
                 renderHistoryTable();
                 populateTestDropdown();
             }
@@ -459,6 +613,7 @@
         const testDropdown = document.getElementById("testDropdown");
         const rulesBox = document.getElementById("rulesBox");
         const passageBox = document.getElementById("passageBox");
+        const charCountTag = document.getElementById("charCountTag");
         const typingInput = document.getElementById("typingInput");
         const timerDisplay = document.getElementById("timerDisplay");
         const keyCountDisplay = document.getElementById("keyCount");
@@ -484,7 +639,7 @@
                 if(attempts.length > 0) {
                     let bestKeys = Math.max(...attempts.map(a => a.keys));
                     let hasPassed = attempts.some(a => a.status === "PASS");
-                    badgeText = ` ✔ (${attempts.length}x | Best Keys: ${bestKeys} - ${hasPassed ? 'PASS' : 'FAIL'})`;
+                    badgeText = ` ✔ (${attempts.length} Attempt${attempts.length > 1 ? 's' : ''} | Best: ${bestKeys} Keys - ${hasPassed ? 'PASS' : 'FAIL'})`;
                 } else {
                     badgeText = " (Not Attempted)";
                 }
@@ -501,7 +656,7 @@
             let tbody = document.getElementById("historyTableBody");
             
             if(history.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts recorded yet. Take a test above!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No attempts logged yet. Select a test and begin!</td></tr>`;
                 return;
             }
 
@@ -532,14 +687,17 @@
 
         function loadPassage() {
             let selectedTestKey = testDropdown.value;
-            currentPassage = allTestsData[currentPost][selectedTestKey];
+            currentPassage = generatedPassages[currentPost][selectedTestKey];
             passageBox.innerHTML = "";
+            
             currentPassage.split("").forEach((char, index) => {
                 const charSpan = document.createElement("span");
                 charSpan.innerText = char;
                 if(index === 0) charSpan.classList.add("current");
                 passageBox.appendChild(charSpan);
             });
+
+            charCountTag.innerText = `Length: ${currentPassage.length} chars (~${Math.round(currentPassage.length/5)} words)`;
 
             let totalSec = postConfigs[currentPost].durationSec;
             let m = Math.floor(totalSec / 60);
@@ -640,27 +798,27 @@
 
             if(currentPost === "dp_awo_tpo") {
                 if(stats.keyDepressions < 1000 && stats.errors >= 25) {
-                    failReason = `Failed: Key depressions (${stats.keyDepressions}) were under 1000 AND errors (${stats.errors}) exceeded 24.`;
+                    failReason = `FAILED: Key depressions (${stats.keyDepressions}) were under 1000 AND errors (${stats.errors}) exceeded 24 threshold.`;
                 } else if(stats.keyDepressions < 1000) {
-                    failReason = `Failed: Key depressions were ${stats.keyDepressions} (Minimum 1000 required).`;
+                    failReason = `FAILED: Key depressions were ${stats.keyDepressions} (Minimum 1000 required).`;
                 } else if(stats.errors >= 25) {
-                    failReason = `Failed: Errors were ${stats.errors} (Maximum 24 allowed).`;
+                    failReason = `FAILED: Total errors were ${stats.errors} (Maximum allowed is 24 errors).`;
                 } else {
                     passed = true;
                 }
             } else if(currentPost === "ssc_dest") {
                 if(stats.keyDepressions < 2000) {
-                    failReason = `Failed: Key depressions were ${stats.keyDepressions} (Minimum 2000 required for DEST).`;
+                    failReason = `FAILED: Key depressions were ${stats.keyDepressions} (Minimum 2000 required for SSC DEST).`;
                 } else if(stats.errors > config.maxMistakes) {
-                    failReason = `Failed: Errors (${stats.errors}) exceeded maximum allowed limit.`;
+                    failReason = `FAILED: Errors (${stats.errors}) exceeded maximum allowed limit (${config.maxMistakes}).`;
                 } else {
                     passed = true;
                 }
             } else {
                 if(stats.wpm < config.minWpm) {
-                    failReason = `Failed: Net speed was ${stats.wpm} WPM (Minimum ${config.minWpm} WPM required).`;
+                    failReason = `FAILED: Net speed was ${stats.wpm} WPM (Minimum required is ${config.minWpm} WPM).`;
                 } else if(stats.errors > config.maxMistakes) {
-                    failReason = `Failed: Errors (${stats.errors}) exceeded maximum limit.`;
+                    failReason = `FAILED: Errors (${stats.errors}) exceeded maximum allowed limit (${config.maxMistakes}).`;
                 } else {
                     passed = true;
                 }
@@ -691,7 +849,7 @@
             if(passed) {
                 statusBadge.innerText = "QUALIFIED (PASSED)";
                 statusBadge.className = "status-badge status-pass";
-                resultReason.innerText = `Congratulations! You cleared all criteria for ${config.title}.`;
+                resultReason.innerText = `Congratulations! You cleared all official criteria for ${config.title}.`;
             } else {
                 statusBadge.innerText = "DISQUALIFIED (FAILED)";
                 statusBadge.className = "status-badge status-fail";
