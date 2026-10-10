@@ -130,7 +130,7 @@
             gap: 10px;
         }
 
-        /* 100% STABLE TEXT RENDERING: NO JUMPING OR MOVING */
+        /* STABLE PASSAGE BOX: NO COLOR CHANGE / NO BOLDING ON TYPING */
         .passage-box {
             height: 360px;
             overflow-y: auto;
@@ -146,14 +146,6 @@
             letter-spacing: 0px;
             font-variant-ligatures: none;
         }
-
-        .passage-box span {
-            display: inline;
-        }
-
-        /* REAL EXAM MODE: NO LIVE RED / GREEN HIGHLIGHTS */
-        .passage-box span.typed { color: #0f172a; font-weight: 600; }
-        .passage-box span.current { border-bottom: 3px solid var(--primary); background-color: var(--primary-light); color: #0f172a; }
 
         .book-page-right {
             background: #ffffff;
@@ -323,7 +315,7 @@
             <div class="exam-top-bar">
                 <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
                 <div class="stat-box"><i class="fa-solid fa-keyboard"></i> Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (No Live Colors)</span></div>
+                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Clean Text)</span></div>
             </div>
 
             <div class="book-container">
@@ -598,14 +590,8 @@
         function loadPassage() {
             let selectedTestKey = testDropdown.value;
             currentPassage = allTestsData[currentPost][selectedTestKey];
-            passageBox.innerHTML = "";
+            passageBox.innerText = currentPassage; // Plain static text, no inner spans or formatting
             passageBox.scrollTop = 0;
-            currentPassage.split("").forEach((char, index) => {
-                const charSpan = document.createElement("span");
-                charSpan.innerText = char;
-                if(index === 0) charSpan.classList.add("current");
-                passageBox.appendChild(charSpan);
-            });
 
             let totalSec = postConfigs[currentPost].durationSec;
             let m = Math.floor(totalSec / 60);
@@ -658,19 +644,7 @@
 
         function evaluateLive() {
             const typedVal = typingInput.value;
-            const spans = passageBox.querySelectorAll("span");
-            
             let keyDepressions = typedVal.length;
-
-            spans.forEach((span, i) => {
-                span.className = "";
-                if (i < typedVal.length) {
-                    span.classList.add("typed");
-                } else if (i === typedVal.length) {
-                    span.classList.add("current");
-                }
-            });
-
             keyCountDisplay.innerText = keyDepressions;
             return keyDepressions;
         }
@@ -681,17 +655,15 @@
             typingInput.disabled = true;
 
             const typedVal = typingInput.value;
-            const spans = passageBox.querySelectorAll("span");
-            
             let keyDepressions = typedVal.length;
             let errors = 0;
 
-            spans.forEach((span, i) => {
+            for (let i = 0; i < currentPassage.length; i++) {
                 const typedChar = typedVal[i];
-                if (typedChar != null && typedChar !== span.innerText) {
+                if (typedChar != null && typedChar !== currentPassage[i]) {
                     errors++;
                 }
-            });
+            }
 
             let timeElapsed = postConfigs[currentPost].durationSec - totalTimeSeconds;
             let words = keyDepressions / 5;
