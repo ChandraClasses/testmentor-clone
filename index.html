@@ -132,7 +132,7 @@
             color: #1e293b;
         }
 
-        /* REAL EXAM MODE: NO LIVE RED / GREEN COLORS */
+        /* REAL EXAM MODE: NO LIVE RED / GREEN HIGHLIGHTS */
         .passage-box span.typed { color: #0f172a; font-weight: 500; }
         .passage-box span.current { border-bottom: 3px solid var(--primary-light); background-color: #e2e8f0; }
 
@@ -270,7 +270,7 @@
             <div class="select-group">
                 <label for="postDropdown"><i class="fa-solid fa-briefcase"></i> Select Exam Category:</label>
                 <select id="postDropdown" class="custom-select" onchange="onPostChange()">
-                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / Min 1000 Keys Target</option>
+                    <option value="dp_awo_tpo">Delhi Police HC (AWO/TPO) - 15 Mins / 1500 Keys Passage (Min 1000 Target)</option>
                     <option value="dp_ministerial">Delhi Police HC (Ministerial) - 10 Mins / 30 WPM Target</option>
                     <option value="ssc_dest">SSC CGL / CHSL DEST - 15 Mins / Min 2000 Keys Target</option>
                     <option value="rrb_ntpc">RRB NTPC Typing Test - 10 Mins / 30 WPM Target</option>
@@ -377,7 +377,7 @@
             dp_awo_tpo: {
                 title: "Delhi Police HC (AWO/TPO)",
                 durationSec: 900, reqKeys: 1000, maxMistakes: 24, minWpm: 13.3,
-                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Passage: ~1500 Key Depressions | Requirement: Min 1000 Keys & Max 24 Mistakes."
+                rulesText: "<strong>Official Criteria:</strong> Time: 15 Mins | Passage: Exactly 1500 Key Depressions | Requirement: Min 1000 Keys & Max 24 Mistakes."
             },
             dp_ministerial: {
                 title: "Delhi Police HC (Ministerial)",
@@ -401,7 +401,6 @@
             }
         };
 
-        // Large Independent Sentence Bank for Generating 100% Unique Passages without repetition
         const sentenceBank = [
             "Wireless communication in modern police forces requires high precision, speed, and standard protocol adherence for seamless dispatch operations across command centers.",
             "Tele-printer operators process official instructions rapidly across secure district networks to maintain real-time field coordination during critical security situations.",
@@ -425,24 +424,34 @@
             "Educational policies emphasize critical thinking, practical skill development, and multilingual proficiency in primary and secondary curricula."
         ];
 
-        // 100% Unique 200 Passages Generator (No test will ever repeat)
+        // Generator to format EXACT 1500 Key Depressions passage for AWO/TPO
         const allTestsData = {};
         Object.keys(postConfigs).forEach(postKey => {
             allTestsData[postKey] = {};
             for (let i = 1; i <= 200; i++) {
-                // Pseudo-random unique slicing of sentences from the sentence bank based on test index 'i'
                 let passageSentences = [];
-                let targetLen = (postKey === "dp_awo_tpo") ? 5 : 7; // Number of sentences per test
+                let targetLen = (postKey === "dp_awo_tpo") ? 8 : 11;
                 
                 for (let s = 0; s < targetLen; s++) {
                     let index = (i * 7 + s * 13) % sentenceBank.length;
                     passageSentences.push(sentenceBank[index]);
                 }
                 
-                // Add a unique test set identifier sentence to make each passage fully distinct
-                passageSentences.push(`Test assessment set number ${i} for ${postConfigs[postKey].title} designed to evaluate typing accuracy and keyboard dexterity under professional examination standards.`);
+                let fullText = passageSentences.join(" ") + ` Test Set ${i} assessment passage for ${postConfigs[postKey].title} designed to evaluate typing accuracy and keyboard dexterity under professional examination standards.`;
                 
-                allTestsData[postKey][`test_${i}`] = passageSentences.join(" ");
+                if (postKey === "dp_awo_tpo") {
+                    // Truncate/Pad strictly to EXACT 1500 key depressions length
+                    if (fullText.length > 1500) {
+                        fullText = fullText.substring(0, 1500);
+                    } else {
+                        while (fullText.length < 1500) {
+                            fullText += " Maintaining clean typing rhythm ensures accuracy.";
+                        }
+                        fullText = fullText.substring(0, 1500);
+                    }
+                }
+
+                allTestsData[postKey][`test_${i}`] = fullText;
             }
         });
 
@@ -633,7 +642,6 @@
             let keyDepressions = typedVal.length;
             let errors = 0;
 
-            // Strict Errors Calculation evaluated only upon test completion
             spans.forEach((span, i) => {
                 const typedChar = typedVal[i];
                 if (typedChar != null && typedChar !== span.innerText) {
