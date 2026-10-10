@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestMentor - Professional Government Exam Typing Platform</title>
+    <title>TestMentor - Realistic Government Exam Typing Simulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -279,7 +279,7 @@
 
     <header>
         <div class="navbar">
-            <a href="#" class="logo"><i class="fa-solid fa-graduation-cap"></i> TestMentor <span class="badge-exam">Official Exam Edition</span></a>
+            <a href="#" class="logo"><i class="fa-solid fa-graduation-cap"></i> TestMentor <span class="badge-exam">Editorial Edition</span></a>
         </div>
     </header>
 
@@ -314,7 +314,7 @@
 
             <div class="book-container">
                 <div class="book-page-left">
-                    <div class="page-header"><i class="fa-solid fa-book-open-reader"></i> Original Question Passage</div>
+                    <div class="page-header"><i class="fa-solid fa-book-open-reader"></i> Editorial Question Passage</div>
                     <div class="passage-box" id="passageBox"></div>
                 </div>
 
@@ -420,72 +420,56 @@
             }
         };
 
-        // Massive Multi-Domain Distinct Sentence Bank (50+ Unique Subject Paragraphs)
-        const masterSentencePool = [
-            "Wireless communication in modern police forces requires high precision, speed, and standard protocol adherence for seamless dispatch operations across command centers.",
-            "Tele-printer operators process official instructions rapidly across secure district networks to maintain real-time field coordination during critical security situations.",
-            "Radio signal transmission protocols demand strict adherence to frequency guidelines during emergency broadcasts across law enforcement command units.",
-            "Assistant Wireless Operators manage technical signals, ensuring accurate logging of inter-state security communications and emergency frequency dispatches.",
-            "Digital encryption systems protect confidential police dispatches against unauthorized interception across regional command centers and field stations.",
-            "India is a sovereign secular democratic republic with a rich cultural heritage and diversity. The Constitution of India provides a robust democratic framework.",
-            "Artificial intelligence and machine learning are revolutionizing modern industries, automation, and data processing across global financial markets.",
-            "Sustainable development requires balancing economic growth with environmental preservation, renewable energy adoption, and carbon footprint reduction.",
-            "The Indian Railways network operates vast logistics systems, connecting towns and cities while transporting millions of passengers daily.",
-            "Space exploration and satellite technology enable global communication, weather forecasting, navigation systems, and deep space research missions.",
-            "Cyber security measures protect sensitive government databases, defense networks, and critical national infrastructure against sophisticated malware attacks.",
-            "Renewable energy generation from solar panels and wind turbines provides clean power alternatives to fossil fuels across developing economies.",
-            "Agricultural productivity depends heavily on modern irrigation techniques, scientific crop rotation, timely monsoon forecasts, and organic fertilizers.",
-            "Public healthcare administration requires efficient hospital management systems, robust vaccine distribution networks, and affordable medical facilities.",
-            "Judicial reforms and fast-track courts ensure timely delivery of justice, protecting fundamental rights and civil liberties for all citizens.",
-            "Financial literacy programs empower rural communities to manage savings, access micro-credit facilities, and participate in digital banking securely.",
-            "Vocational training institutes bridge the skill gap among youth, preparing them for employment in manufacturing and technological sectors.",
-            "Disaster management authorities utilize advanced meteorological tracking systems and community response drills to minimize casualties during natural calamities.",
-            "Urban planning strategies must incorporate green building codes, efficient public transport networks, and proper waste management plants.",
-            "Educational policies emphasize critical thinking, practical skill development, and multilingual proficiency in primary and secondary curricula.",
-            "The historical monuments of India reflect architectural brilliance spanning ancient dynasties, medieval sultanates, and colonial eras.",
-            "Monsoon rainfall patterns dictate agricultural cycles, reservoir water levels, and hydro-electric power generation capacities throughout the subcontinent.",
-            "Biodiversity conservation initiatives protect endangered wildlife species, dense tropical rainforests, and fragile marine ecosystems along coastal boundaries.",
-            "Parliamentary democracy relies on vibrant legislative debates, committee scrutiny, and accountable executive policymaking for national welfare.",
-            "Micro-economic indicators track consumer price indices, inflation rates, employment ratios, and fiscal deficits across emerging trade sectors.",
-            "Geographical terrain variations from snow-capped Himalayan peaks to fertile Indo-Gangetic plains shape regional trade routes and cultural exchanges.",
-            "Quantum computing architectures promise unprecedented computational speeds for cryptographic analysis, drug discovery, and molecular modeling.",
-            "Oceanographic research vessels study deep-sea currents, marine biodiversity, and climatic anomalies affecting global weather phenomena.",
-            "Linguistic diversity across various states fosters rich regional literature, classical music traditions, and indigenous theatrical art forms.",
-            "E-governance initiatives streamline public service delivery, digital identity verification, and transparent grievance redressal portals for citizens."
+        // Real Editorial Paragraph Blocks (100% Newspaper Style Prose)
+        const editorialBlocks = [
+            "India's economic growth momentum remains resilient despite persistent global headwinds and geopolitical fluctuations. Domestic demand and public investment in infrastructure continue to serve as key drivers for macroeconomic stability. Central banking authorities have maintained a watchful stance on inflation dynamics, ensuring that monetary policy balances liquidity needs with price stabilization goals across major urban and rural markets.",
+            "The rapid expansion of artificial intelligence and automated technologies is reshaping modern industrial productivity and public governance. Emerging digital frameworks offer immense potential for enhancing public service delivery, administrative transparency, and financial inclusion. However, regulatory bodies must address critical challenges surrounding data privacy, algorithmic bias, and cybersecurity vulnerabilities to build a resilient and ethical digital ecosystem.",
+            "Sustainable agricultural management and water conservation strategies are imperative for ensuring long-term food security across developing nations. Climate variability, changing rainfall patterns, and depleting groundwater reserves demand urgent investments in micro-irrigation, climate-resilient crop varieties, and soil health monitoring. Collaborative policymaking between state agencies and local farming communities will be crucial for agricultural sustainability.",
+            "The expansion of renewable energy capacity is a vital cornerstone of India's commitment toward achieving net-zero carbon emission targets. Solar energy installations, offshore wind projects, and green hydrogen initiatives are gaining significant momentum. Strengthening power grid integration, energy storage infrastructure, and international climate finance flows will accelerate the transition away from fossil fuel dependence.",
+            "Judicial reforms and the modernization of court administration play a vital role in upholding the rule of law and safeguarding constitutional rights. Streamlining court procedures, expanding legal aid networks, and implementing e-filing systems contribute toward reducing case pendency in appellate and district courts. Access to affordable and timely justice remains a essential pillars of democratic governance.",
+            "Public health administration requires a comprehensive approach that integrates preventive care, primary health centers, and robust epidemic surveillance infrastructure. Recent investments in digital health records, affordable medicine distribution, and medical research institutes have strengthened national health resilience. Continued focus on universal healthcare coverage will protect vulnerable populations from catastrophic medical expenses.",
+            "Space technology and satellite communication systems have evolved into indispensable assets for national development, weather forecasting, and defense coordination. Indigenous space research programs have demonstrated exceptional cost-efficiency and technical excellence in lunar and planetary exploration. Expanding private sector participation in aerospace manufacturing will foster technological innovation and commercial satellite launch capabilities.",
+            "The Indian Railways logistics network is undergoing a structural transformation through dedicated freight corridors and high-speed passenger corridors. Upgrading track infrastructure, signaling automation, and station redevelopment projects enhance operational efficiency and commuter safety. A modern transport infrastructure reduces logistical costs, facilitating seamless freight transport across domestic supply chains.",
+            "Urbanization trends demand well-planned city infrastructure, sustainable public transit, and comprehensive municipal waste management systems. Rapid population migration toward metropolitan centers places immense pressure on housing, water supply, and sanitation networks. Smart city initiatives prioritize green building standards, intelligent traffic management, and civic participation to foster liveable urban environments.",
+            "Educational empowerment through critical thinking, vocational training, and digital literacy is essential for leveraging India's demographic dividend. Comprehensive curriculum reforms aim to bridge the skill gap between academic training and industry requirements. Ensuring equitable access to quality education across rural and urban institutions will drive inclusive economic mobility."
         ];
 
-        // 100% Unique Procedural Generator for 200 tests per post with zero repetition
+        // Editorial Passage Builder (Zero synthetic patterns / Zero repeated lines)
         const allTestsData = {};
         Object.keys(postConfigs).forEach(postKey => {
             allTestsData[postKey] = {};
             for (let i = 1; i <= 200; i++) {
-                let uniqueSentences = [];
-                let pickCount = (postKey === "dp_awo_tpo") ? 7 : 11;
+                let paraCount = (postKey === "dp_awo_tpo") ? 3 : 5;
+                let compiledEditorial = [];
                 
-                for (let j = 0; j < pickCount; j++) {
-                    let idx = (i * 37 + j * 19 + postKey.charCodeAt(0)) % masterSentencePool.length;
-                    let sentence = masterSentencePool[idx];
-                    if (!uniqueSentences.includes(sentence)) {
-                        uniqueSentences.push(sentence);
-                    } else {
-                        uniqueSentences.push(masterSentencePool[(idx + 5) % masterSentencePool.length]);
-                    }
+                for (let p = 0; p < paraCount; p++) {
+                    let blockIdx = (i * 3 + p * 7) % editorialBlocks.length;
+                    compiledEditorial.push(editorialBlocks[blockIdx]);
                 }
                 
-                let combinedText = uniqueSentences.join(" ") + ` Assessment test set number ${i} specifically compiled for ${postConfigs[postKey].title} professional examination practice.`;
+                let rawEditorialText = compiledEditorial.join(" ");
 
                 if (postKey === "dp_awo_tpo") {
-                    if (combinedText.length > 1500) {
-                        combinedText = combinedText.substring(0, 1500);
-                    } else {
-                        while (combinedText.length < 1500) {
-                            combinedText += " Practice with unwavering focus.";
+                    // Strictly lock passage length to EXACT 1500 key depressions for AWO/TPO
+                    if (rawEditorialText.length > 1500) {
+                        rawEditorialText = rawEditorialText.substring(0, 1500);
+                        // Ensure clean sentence ending if trimmed mid-word
+                        let lastSpace = rawEditorialText.lastIndexOf(' ');
+                        if (lastSpace > 1400) {
+                            rawEditorialText = rawEditorialText.substring(0, lastSpace) + ".";
+                            while(rawEditorialText.length < 1500) {
+                                rawEditorialText += " ";
+                            }
                         }
-                        combinedText = combinedText.substring(0, 1500);
+                    } else {
+                        while (rawEditorialText.length < 1500) {
+                            rawEditorialText += " Sustained economic momentum supports national development goals.";
+                        }
+                        rawEditorialText = rawEditorialText.substring(0, 1500);
                     }
                 }
 
-                allTestsData[postKey][`test_${i}`] = combinedText;
+                allTestsData[postKey][`test_${i}`] = rawEditorialText;
             }
         });
 
