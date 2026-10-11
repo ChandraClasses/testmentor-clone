@@ -130,7 +130,6 @@
             gap: 10px;
         }
 
-        /* STABLE PASSAGE BOX: NO COLOR CHANGE / NO BOLDING ON TYPING */
         .passage-box {
             height: 360px;
             overflow-y: auto;
@@ -177,10 +176,11 @@
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
 
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; gap: 10px; flex-wrap: wrap; }
+        .controls-left { display: flex; gap: 10px; }
 
         .btn {
-            padding: 0.85rem 2rem;
+            padding: 0.85rem 1.8rem;
             font-weight: 700;
             border-radius: 12px;
             border: none;
@@ -195,6 +195,8 @@
 
         .btn-start { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
         .btn-start:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); }
+        .btn-submit { background: linear-gradient(135deg, var(--success), #047857); color: white; display: none; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3); }
         .btn-reset { background: #64748b; color: white; }
         .btn-reset:hover { background: #475569; }
         .btn-danger { background: var(--danger); color: white; }
@@ -331,7 +333,10 @@
                     </div>
                     
                     <div class="controls">
-                        <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Test</button>
+                        <div class="controls-left">
+                            <button class="btn btn-start" id="startBtn" onclick="startExam()"><i class="fa-solid fa-play"></i> Start Test</button>
+                            <button class="btn btn-submit" id="submitBtn" onclick="manualSubmit()"><i class="fa-solid fa-check-double"></i> Submit Test</button>
+                        </div>
                         <button class="btn btn-reset" onclick="resetExam()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
                     </div>
                 </div>
@@ -522,6 +527,7 @@
         const timerDisplay = document.getElementById("timerDisplay");
         const keyCountDisplay = document.getElementById("keyCount");
         const startBtn = document.getElementById("startBtn");
+        const submitBtn = document.getElementById("submitBtn");
 
         let currentPost = "dp_awo_tpo";
         let currentPassage = "";
@@ -590,7 +596,7 @@
         function loadPassage() {
             let selectedTestKey = testDropdown.value;
             currentPassage = allTestsData[currentPost][selectedTestKey];
-            passageBox.innerText = currentPassage; // Plain static text, no inner spans or formatting
+            passageBox.innerText = currentPassage;
             passageBox.scrollTop = 0;
 
             let totalSec = postConfigs[currentPost].durationSec;
@@ -610,8 +616,8 @@
             typingInput.value = "";
             typingInput.focus();
             
-            startBtn.disabled = true;
-            startBtn.style.opacity = "0.5";
+            startBtn.style.display = "none";
+            submitBtn.style.display = "inline-flex";
 
             totalTimeSeconds = postConfigs[currentPost].durationSec;
             
@@ -636,10 +642,6 @@
         typingInput.addEventListener("input", () => {
             if(!isExamActive) return;
             evaluateLive();
-
-            if(typingInput.value.length >= currentPassage.length) {
-                finishExam();
-            }
         });
 
         function evaluateLive() {
@@ -649,10 +651,22 @@
             return keyDepressions;
         }
 
+        function manualSubmit() {
+            if(!isExamActive) return;
+            if(confirm("Kya aap apna test submit karna chahte hain?")) {
+                finishExam();
+            }
+        }
+
         function finishExam() {
             clearInterval(timerInterval);
             isExamActive = false;
             typingInput.disabled = true;
+
+            submitBtn.style.display = "none";
+            startBtn.style.display = "inline-flex";
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
 
             const typedVal = typingInput.value;
             let keyDepressions = typedVal.length;
@@ -753,8 +767,10 @@
             typingInput.disabled = true;
             typingInput.value = "";
             
+            startBtn.style.display = "inline-flex";
             startBtn.disabled = false;
             startBtn.style.opacity = "1";
+            submitBtn.style.display = "none";
             
             keyCountDisplay.innerText = "0";
             loadPassage();
