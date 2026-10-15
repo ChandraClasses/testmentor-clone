@@ -658,6 +658,7 @@
             }
         }
 
+        // FIXED EVALUATION ENGINE: Accurate error calculation for typed length only
         function finishExam() {
             clearInterval(timerInterval);
             isExamActive = false;
@@ -672,9 +673,9 @@
             let keyDepressions = typedVal.length;
             let errors = 0;
 
-            for (let i = 0; i < currentPassage.length; i++) {
-                const typedChar = typedVal[i];
-                if (typedChar != null && typedChar !== currentPassage[i]) {
+            // Strict comparison up to typed characters only
+            for (let i = 0; i < typedVal.length; i++) {
+                if (typedVal[i] !== currentPassage[i]) {
                     errors++;
                 }
             }
@@ -689,11 +690,11 @@
             let failReason = "";
 
             if(currentPost === "dp_awo_tpo") {
-                if(keyDepressions < 1000 && errors >= 25) {
+                if(keyDepressions < 1000 && errors > 24) {
                     failReason = `Failed: Key depressions (${keyDepressions}) were under 1000 AND errors (${errors}) exceeded 24.`;
                 } else if(keyDepressions < 1000) {
                     failReason = `Failed: Key depressions were ${keyDepressions} (Minimum 1000 required).`;
-                } else if(errors >= 25) {
+                } else if(errors > 24) {
                     failReason = `Failed: Total errors were ${errors} (Maximum 24 allowed).`;
                 } else {
                     passed = true;
