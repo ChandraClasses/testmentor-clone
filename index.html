@@ -317,7 +317,7 @@
             <div class="exam-top-bar">
                 <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
                 <div class="stat-box"><i class="fa-solid fa-keyboard"></i> Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Clean Text)</span></div>
+                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Smart Alignment)</span></div>
             </div>
 
             <div class="book-container">
@@ -658,7 +658,48 @@
             }
         }
 
-        // FIXED EVALUATION ENGINE: Accurate error calculation for typed length only
+        // SMART WORD ALIGNMENT ERROR ENGINE (Prevents Cascading Index-Shift Errors)
+        function calculateErrors(originalText, typedText) {
+            const origWords = originalText.trim().split(/\s+/);
+            const typedWords = typedText.trim().split(/\s+/);
+            
+            let totalErrors = 0;
+            let origIndex = 0;
+
+            for (let i = 0; i < typedWords.length; i++) {
+                const tWord = typedWords[i];
+                
+                // Match word within a window of 3 to handle skipped/added words
+                let matchFound = false;
+                for (let lookahead = 0; lookahead <= 2; lookahead++) {
+                    if (origIndex + lookahead < origWords.length) {
+                        if (tWord === origWords[origIndex + lookahead]) {
+                            origIndex += lookahead + 1;
+                            matchFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!matchFound) {
+                    // Compare character-by-character for the mis-typed word
+                    const targetWord = origWords[origIndex] || "";
+                    let wordCharErrors = 0;
+                    const maxLen = Math.max(tWord.length, targetWord.length);
+                    
+                    for (let c = 0; c < maxLen; c++) {
+                        if (tWord[c] !== targetWord[c]) {
+                            wordCharErrors++;
+                        }
+                    }
+                    totalErrors += wordCharErrors;
+                    origIndex++;
+                }
+            }
+
+            return totalErrors;
+        }
+
         function finishExam() {
             clearInterval(timerInterval);
             isExamActive = false;
@@ -671,14 +712,9 @@
 
             const typedVal = typingInput.value;
             let keyDepressions = typedVal.length;
-            let errors = 0;
-
-            // Strict comparison up to typed characters only
-            for (let i = 0; i < typedVal.length; i++) {
-                if (typedVal[i] !== currentPassage[i]) {
-                    errors++;
-                }
-            }
+            
+            // Smart error evaluation algorithm
+            let errors = calculateErrors(currentPassage, typedVal);
 
             let timeElapsed = postConfigs[currentPost].durationSec - totalTimeSeconds;
             let words = keyDepressions / 5;
