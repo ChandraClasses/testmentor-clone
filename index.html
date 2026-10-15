@@ -351,7 +351,7 @@
             <div class="exam-top-bar">
                 <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
                 <div class="stat-box"><i class="fa-solid fa-keyboard"></i> Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Error Audit)</span></div>
+                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Word Error Counting)</span></div>
             </div>
 
             <div class="book-container">
@@ -691,7 +691,7 @@
             }
         }
 
-        // ACCURATE WORD-ALIGNMENT ENGINE WITH DETAILED ERROR AUDITING
+        // STRICT 1-WORD = 1 ERROR COUNTING ENGINE
         function analyzeErrorsAndLog(originalText, typedText) {
             const origWords = originalText.trim().split(/\s+/);
             const typedWords = typedText.trim().split(/\s+/);
@@ -720,16 +720,10 @@
 
                 if (!matchFound) {
                     const targetWord = origWords[origIndex] || "";
-                    let wordCharErrors = 0;
-                    const maxLen = Math.max(tWord.length, targetWord.length);
                     
-                    for (let c = 0; c < maxLen; c++) {
-                        if (tWord[c] !== targetWord[c]) {
-                            wordCharErrors++;
-                        }
-                    }
-
-                    totalErrors += (wordCharErrors > 0 ? wordCharErrors : 1);
+                    // Exactly 1 error for 1 mis-typed word
+                    totalErrors += 1;
+                    
                     errorLogs.push({
                         typed: tWord,
                         expected: targetWord
@@ -754,7 +748,7 @@
             const typedVal = typingInput.value;
             let keyDepressions = typedVal.length;
             
-            // Detailed Analysis Call
+            // Exact 1-word 1-error count
             let { totalErrors: errors, errorLogs } = analyzeErrorsAndLog(currentPassage, typedVal);
 
             let timeElapsed = postConfigs[currentPost].durationSec - totalTimeSeconds;
