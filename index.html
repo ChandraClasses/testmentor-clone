@@ -234,13 +234,15 @@
         .result-modal {
             background: #ffffff;
             border: 1px solid var(--border);
-            padding: 2.8rem;
+            padding: 2.2rem;
             border-radius: 24px;
-            max-width: 500px;
-            width: 90%;
+            max-width: 600px;
+            width: 92%;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
             animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalPop {
@@ -254,7 +256,7 @@
             font-size: 1.15rem;
             font-weight: 800;
             border-radius: 35px;
-            margin: 1.2rem 0;
+            margin: 1rem 0;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -265,17 +267,49 @@
         .eval-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin: 1.8rem 0;
+            gap: 1rem;
+            margin: 1.2rem 0;
             text-align: left;
             background: #f8fafc;
-            padding: 1.4rem;
+            padding: 1.2rem;
             border-radius: 16px;
             border: 1px solid var(--border);
         }
 
         .eval-item label { font-size: 0.78rem; color: var(--text-muted); display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .eval-item val { font-weight: 800; font-size: 1.3rem; color: var(--text); }
+
+        .error-log-box {
+            text-align: left;
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            max-height: 160px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .error-log-box h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #9b2c2c;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .error-item {
+            padding: 4px 0;
+            border-bottom: 1px dashed #feb2b2;
+            color: #742a2a;
+        }
+        .error-item:last-child { border-bottom: none; }
+        .error-item .typed-bad { color: #c53030; font-weight: 700; text-decoration: line-through; }
+        .error-item .typed-good { color: #276749; font-weight: 700; }
 
         @media (max-width: 900px) {
             .book-container { grid-template-columns: 1fr; }
@@ -317,7 +351,7 @@
             <div class="exam-top-bar">
                 <div class="stat-box"><i class="fa-regular fa-clock"></i> Time Left: <span id="timerDisplay">15:00</span></div>
                 <div class="stat-box"><i class="fa-solid fa-keyboard"></i> Keys Pressed: <span id="keyCount">0</span></div>
-                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Smart Alignment)</span></div>
+                <div class="stat-box"><i class="fa-solid fa-shield-halved"></i> Exam Mode: <span style="color:#38bdf8;">Real Exam (Error Audit)</span></div>
             </div>
 
             <div class="book-container">
@@ -396,6 +430,12 @@
                     <label>Accuracy</label>
                     <val id="resAccuracy">0%</val>
                 </div>
+            </div>
+
+            <!-- MISTAKE ANALYSIS LOG DISPLAY -->
+            <div class="error-log-box" id="errorLogBox">
+                <h4><i class="fa-solid fa-triangle-exclamation"></i> Detailed Error Analysis:</h4>
+                <div id="errorLogList"></div>
             </div>
 
             <button class="btn btn-start" onclick="closeModal()" style="width:100%; justify-content:center;">Try Next / Retake</button>
@@ -485,16 +525,9 @@
                         let lastPeriod = passageText.lastIndexOf('.');
                         if (lastPeriod > 1350) {
                             passageText = passageText.substring(0, lastPeriod + 1);
-                            while(passageText.length < 1500) {
-                                passageText += " ";
-                            }
                         }
-                    } else {
-                        while (passageText.length < 1500) {
-                            passageText += " National policy frameworks support continuous institutional progress.";
-                        }
-                        passageText = passageText.substring(0, 1500);
                     }
+                    passageText = passageText.trim();
                 }
 
                 allTestsData[postKey][`test_${i}`] = passageText;
@@ -658,18 +691,22 @@
             }
         }
 
-        // SMART WORD ALIGNMENT ERROR ENGINE (Prevents Cascading Index-Shift Errors)
-        function calculateErrors(originalText, typedText) {
+        // ACCURATE WORD-ALIGNMENT ENGINE WITH DETAILED ERROR AUDITING
+        function analyzeErrorsAndLog(originalText, typedText) {
             const origWords = originalText.trim().split(/\s+/);
             const typedWords = typedText.trim().split(/\s+/);
             
             let totalErrors = 0;
             let origIndex = 0;
+            let errorLogs = [];
+
+            if(typedText.trim() === "") {
+                return { totalErrors: 0, errorLogs: [] };
+            }
 
             for (let i = 0; i < typedWords.length; i++) {
                 const tWord = typedWords[i];
                 
-                // Match word within a window of 3 to handle skipped/added words
                 let matchFound = false;
                 for (let lookahead = 0; lookahead <= 2; lookahead++) {
                     if (origIndex + lookahead < origWords.length) {
@@ -682,7 +719,6 @@
                 }
 
                 if (!matchFound) {
-                    // Compare character-by-character for the mis-typed word
                     const targetWord = origWords[origIndex] || "";
                     let wordCharErrors = 0;
                     const maxLen = Math.max(tWord.length, targetWord.length);
@@ -692,12 +728,17 @@
                             wordCharErrors++;
                         }
                     }
-                    totalErrors += wordCharErrors;
+
+                    totalErrors += (wordCharErrors > 0 ? wordCharErrors : 1);
+                    errorLogs.push({
+                        typed: tWord,
+                        expected: targetWord
+                    });
                     origIndex++;
                 }
             }
 
-            return totalErrors;
+            return { totalErrors, errorLogs };
         }
 
         function finishExam() {
@@ -713,8 +754,8 @@
             const typedVal = typingInput.value;
             let keyDepressions = typedVal.length;
             
-            // Smart error evaluation algorithm
-            let errors = calculateErrors(currentPassage, typedVal);
+            // Detailed Analysis Call
+            let { totalErrors: errors, errorLogs } = analyzeErrorsAndLog(currentPassage, typedVal);
 
             let timeElapsed = postConfigs[currentPost].durationSec - totalTimeSeconds;
             let words = keyDepressions / 5;
@@ -789,6 +830,22 @@
             document.getElementById("resErrors").innerText = errors;
             document.getElementById("resWpm").innerText = wpm;
             document.getElementById("resAccuracy").innerText = accuracy + "%";
+
+            // POPULATE ERROR AUDIT LIST
+            const errorLogList = document.getElementById("errorLogList");
+            const errorLogBox = document.getElementById("errorLogBox");
+
+            if(errorLogs.length === 0) {
+                errorLogBox.style.display = "block";
+                errorLogList.innerHTML = `<div style="color: #276749; font-weight:700;">🎉 Perfect Typing! No word/spelling mistakes detected.</div>`;
+            } else {
+                errorLogBox.style.display = "block";
+                errorLogList.innerHTML = errorLogs.map(log => `
+                    <div class="error-item">
+                        Typed: <span class="typed-bad">"${log.typed}"</span> | Expected: <span class="typed-good">"${log.expected}"</span>
+                    </div>
+                `).join("");
+            }
 
             document.getElementById("resultOverlay").style.display = "flex";
         }
